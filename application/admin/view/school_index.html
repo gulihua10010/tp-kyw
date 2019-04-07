@@ -1,0 +1,95 @@
+{extend name="base" /}
+{block name="css"}
+<link rel="stylesheet" href="__ADMIN__/css/form.css">
+{/block}
+{block name="body"}
+<div class="admin-main">
+    <div class="layui-field-box layui-form">
+
+        <div class="layui-box-searchber">
+            <a href="{:url('admin/school/add')}" class="layui-btn layui-btn-small" id="add">
+                <i class="layui-icon">&#xe608;</i> 添加学校
+            </a>
+            <form class=" layui-form-pane" action="{:url('admin/school/index')}" method="get">
+                <div class="layui-inline">
+                    <label class="layui-form-label">关键词</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="keyword" value="{:session('schoolkeyword')}" placeholder="请输入关键词"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn  layui-btn-small">搜索</button>
+                </div>
+            </form>
+        </div>
+        <table class="layui-table admin-table">
+            <thead>
+            <tr>
+                <th width="5%" align="center">ID</th>
+                <th width="15%" align="center">学校名称</th>
+                <th width="15%" align="center">学校省份</th>
+                <th width="15%" align="center">学校属性</th>
+                <th width="15%" align="center">学校类别</th>
+                <th width="15%" align="center">学校隶属</th>
+                <th width="10%" align="center">添加时间</th>
+                <th width="10%" align="center">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {volist name="schools" id="vo"}
+            <tr>
+                <td align="center">{$vo.id}</td>
+                <td style="padding-left: 20px;"><a target="_blank"
+                                                   href=" {:routerurl('index/school/detail',array('id'=>$vo.id))}">{$vo.name}</a>
+                </td>
+                <td align="center">
+                    <a target="_blank"  >{$vo.provinceName}</a>
+                </td>
+                <td align="center">
+                    <a target="_blank" >{$vo.prop}</a>
+                </td>
+                <td align="center"><a target="_blank"  >{$vo.type}</a>
+                </td>
+                <td align="center">
+                    <a target="_blank"  >{$vo.belong}</a>
+                </td>
+                <td align="center">{$vo.time|date="Y-m-d",###}</td>
+                <td align="center"><a class="layui-btn layui-btn-normal layui-btn-mini"
+                                      href="{:url('school/edit',array('id'=>$vo['id']))}">修改</a>
+                    <a class="elementdel layui-btn layui-btn-danger layui-btn-mini" href="javascript:;"
+                       data-id="{$vo.id}" data-url="{:url('admin/school/delete',array('id'=>$vo['id']))}"
+                       title="删除">删除</a>
+                </td>
+            </tr>
+            {/volist}
+            </tbody>
+        </table>
+    </div>
+</div>
+{/block}
+{block name="page"}
+<div class="btable-paged" style="position: relative;right: 30%">
+    <div class="layui-main">
+        {$schools->render()}
+    </div>
+</div>
+{/block}
+{block name="js"}
+<script type="text/javascript" src="__ADMIN__/js/delelement.js"></script>
+{/block}
+{block name="script"}
+
+<script>
+    layui.use('form', function () {
+        var form = layui.form
+            , jq = layui.jquery;
+
+    })
+    layui.use(['element', 'jquery'], function (data) {
+        var element = layui.element
+            , $ = layui.jquery;//导航的hover效果、二级菜单等功能，需要依赖element模块
+
+    })
+</script>
+{/block}

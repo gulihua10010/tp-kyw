@@ -1,0 +1,93 @@
+{extend name="index_base" /}
+{block name="seo"}
+<title>{$site_config['site_title']}|{$site_config['seo_title']}</title>
+
+<meta name="keywords" content="{$site_config['seo_keyword']}">
+<meta name="description" content="{$site_config['seo_description']}">
+{/block}
+{block name="css"}
+<link rel="stylesheet" href="__PUBLIC__css/res.css">
+
+{/block}
+{block name="body"}
+{include file="other/menu"}
+<div class="content-index">
+    <div class="main-mid"  >
+        <ul class="choose-list">
+            <li class="li-bg">
+                <label  >分类：</label>
+                <a href="{:url('index/resource/index',['pt'=>0])}" name="category" tip="0" {if condition="$pt eq 0"} class="active"{/if}>全部</a>
+                {volist name="pts" id="vo"}
+                <a href="{:url('index/resource/index',['pt'=>$vo.id])}" name="category" tip="{$vo.id}"  {if condition="$pt eq $vo.id"} class="active"{/if}>{$vo.name}</a>
+                {/volist}
+            </li>
+            <li class="li-bg"   style="">
+                <label >子类别：</label>
+                <a href="{:url('index/resource/index',['pt'=>$pt,'st'=>0])}" name="category2" tip="" {if condition="$st eq 0"} class="active"{/if}>全部</a>
+                {if condition="$sts neq 0"}
+                    {volist name="sts" id="vo"}
+                <a href="{:url('index/resource/index',['pt'=>$pt,'st'=>$vo.id])}" name="category2" tip="{$vo.id}" {if condition="$st eq $vo.id"} class="active"{/if}>{$vo.name}</a>
+                    {/volist}
+                {/if}
+
+            </li>
+        </ul>
+    </div>
+
+    <div class="main-bottom  " style="margin-top: 30px">
+            <div class="res-main ">
+                <ul>
+                    {volist name="res" id="vo"}
+                    <li>
+                        <div class="fl"><img title="{$vo.name}" href="{:url('index/resource/detail',['id'=>$vo.id])}"
+                                             src="__ROOT__/public/images/ext/{$vo.ext}.png"> </div>
+                        <div >
+                            <div class="res-title">
+                                <span>{$vo.name}</span>
+                            </div>
+                            <div class="res-info  ">
+                               <div> <span ><a target="_blank" title="{$vo.fname}" href="">
+                                                <svg class="icon" aria-hidden="true">
+                                                  <use xlink:href="{$vo.ext|getExtIcon}"></use>
+                                                </svg> {$vo.fname}</a>
+                               </span></div>
+                                <div class="res-info-data">  <span >大小:{$vo.size|format_bytes}</span><span>下载次数:{$vo.download}</span>
+                                    <span>下载积分:{$vo.point}</span>
+                                    <!--<span>创建时间:{$vo.time|friendlyDate}</span>-->
+                                    <a  class="layui-btn fr" href="{:url('index/resource/detail',['id'=>$vo.id])}" title="{$vo.name}" target="_blank">查看详情</a> </div>
+                            </div>
+                        </div>
+                    </li>
+                    {/volist}
+                </ul>
+                <div class="btable-paged  " >
+                    {$res->render()}
+                </div>
+
+            </div>
+        <div class="res-right  ">
+            <h4 class="pubRightTit"><span>最新资源</span></h4>
+            <ul class="hotSchoolList">
+                {foreach  name="right_d" item="vo"  key="k"}
+                <li class="num{$k+1} noBor"><a href="{:url('index/resource/detail',array('id'=>$vo.id))} "
+                                               target="_blank">{$vo.name}</a>
+                </li>
+                {/foreach}
+            </ul>
+
+        </div>
+    </div>
+
+</div>
+
+
+{/block}
+{block name="js"}
+<script type="text/javascript" src="__PUBLIC__/js/iconfont.js"></script>
+
+{/block}
+{block name="script"}
+<script type="text/javascript">
+
+</script>
+{/block}

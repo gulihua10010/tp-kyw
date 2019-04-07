@@ -1,0 +1,346 @@
+{extend name="index_base" /}
+{block name="seo"}
+<title>{$site_config['site_title']}|{$site_config['seo_title']}</title>
+
+<meta name="keywords" content="{$site_config['seo_keyword']}">
+<meta name="description" content="{$site_config['seo_description']}">
+{/block}
+
+{block name="css"}
+<link rel="stylesheet" href="__PUBLIC__/css/course.css">
+{/block}
+{block name="body"}
+{include file="other/menu"}
+<div class="content-index">
+    <div class="main-mid">
+    <span class="daohang"><a target="_blank" href="{:Url('index/course/index')}" >课程</a>\
+        <a target="_blank" href="{:Url('index/course/detail',['id'=>$course.id])}" >{$course.name}</a>
+        \<a target="_blank" href="{:Url('index/course/showvideo',['vid'=>$video.id,'cid'=>$course.id])}" >{$video.name}</a></span>
+        <div  class="user-top" >
+            <a target="_blank" href="{:url('user/index/home',array('id'=>$user.id))}" title="{$user.username}">
+                <img src="__ROOT__{$user.userhead}" title="{$user.username}">
+                <span>{$user.username}</span>
+                {if condition="$user.id eq session('userid')"}
+                <div class=" comm-edit" style="float: right">
+                    <span type="edit"><a style="color:#999"  class="ask-edit" target="_blank">编辑</a></span>
+                </div>
+                {/if}
+            </a>
+        </div>
+        <div>
+            <span class="ask-title">{$ask.title}</span>
+            <span class="ask-title-edit" style="display: none"><input type="text" class="layui-input title-edit" value="{$ask.title}"></span>
+            <span class="ask-content">{$ask.content|clearHTMLhead}</span>
+            <span class="ask-content-edit" style="display: none"><textarea id="ask-con">{$ask.content}</textarea> </span>
+           <div class="edit-btns" style="float: right;margin: 20px;display: none">
+               <button class="layui-btn edit-save">保存</button>
+               <button class="layui-btn edit-cal" style="background-color: rgb(242,242,242);color: black">取消</button>
+           </div>
+            <div class="comment-list" style="margin: 20px">
+                {if condition="($answer==null)"}
+                暂无回答！
+                {/if}
+                {volist name="answer" id="vo"}
+                <div class="comment-unit">
+                    <div class="comment-info">
+                        <a target="_blank"  href="{:url('user/index/home',array('id'=>$vo.userid))}">
+                            <img src="__ROOT__{$vo.userhead}"  width="30"  alt="{$vo.username}"/>
+                            <span>{$vo.username}</span></a> <span>{$vo.time|friendlyDate}</span>
+                        {if condition="$vo.issolve eq 1" }
+                        <span style="color: #ffcc6f"><i class="iconfont">&#xe606;</i>最佳答案 </span>
+                        {/if}
+                    </div>
+                    <div class="comment-con">
+                        <span>{$vo.content|clearHTMLhead}</span>
+                    </div>
+                    <div class="comment-op">
+                        <span {php}  if(in_array($vo['id'],$iszans))echo 'style="color:red"';{/php}  data-id="{$vo.id}" type="zan">
+                        <i class="iconfont">&#xe611;</i>&nbsp;<span>{$vo.praise}</span>
+                        </span>
+                        <span type="reply"  data-id="{$vo.id}"  data-name="{$vo.username}"><i class="iconfont  ">&#xe644;</i>&nbsp;回复</span>
+                        {if condition="$vo['userid'] eq session('userid')"}
+                        <div class=" comm-edit">
+                            <span type="edit"><a style="color:#999"  class="comm-ask-edit" data-id="{$vo.id}" target="_blank">编辑</a></span>
+                        </div>
+                        {/if}
+                        {if condition="$user.id eq session('userid')"}
+                        <div class=" comm-edit " style="margin: auto 8px;">
+                            <span type="edit" > <a style="color:#ffcc6f"  class="comm-ask-solve" data-id="{$vo.id}" target="_blank">采纳为最佳</a></span>
+                        </div>
+                        {/if}
+                    </div>
+
+
+                    <div class="reply-comment">
+                        {volist name="vo.reply" id="reply"}
+                        <div class="comment-unit">
+                            <div class="comment-info">
+                                <a target="_blank"  href="{:url('user/index/home',array('id'=>$reply.rinfo.id))}"><img
+                                        src="__ROOT__{$reply.rinfo.userhead}" width="30"></a><span>
+                            <a target="_blank"   href="{:url('user/index/home',array('id'=>$reply.rinfo.id))}">
+                                {$reply.rinfo.username}</a>&nbsp;回复&nbsp;<a target="_blank" href="{:url('user/index/home',array('id'=>$reply.pinfo.id))}">
+                            {$reply.pinfo.username}</a></span><span>{$reply.time|friendlyDate}</span>
+
+                            </div>
+                            <div class="comment-con">
+                        <span>{$reply.content|clearHTMLhead}
+                        </span>
+                            </div>
+                            <div class="comment-op">
+                                <span {php}  if(in_array($reply['id'],$iszans))echo 'style="color:red"';{/php} data-id="{$reply.id}" type="zan">
+                                <i class="iconfont">&#xe611;</i>&nbsp;<span>{$reply.praise}</span>
+                                </span>
+
+                                <span type="reply"  data-id="{$reply.id}"  data-name="{$reply.rinfo.username}"><i class="iconfont  ">&#xe644;</i>&nbsp;回复</span>
+                                {if condition="$reply.rinfo.id eq session('userid')"}
+                                <div class=" comm-edit">
+                                    <span type="edit"><a style="color:#999"   data-id="{$reply.id}" class="comm-ask-edit"   target="_blank">编辑</a></span>
+                                </div>
+                                {/if}
+                            </div>
+                        </div>
+                        {/volist}
+                    </div>
+                </div>
+                {/volist}
+
+            </div>
+                      <div class="fly-panel detail-box"  style="margin: 20px auto;">
+                <a name="comment" id="edit-mode"></a>
+                <div id="pinglun" class="layui-form layui-form-pane">
+                    <form method="post">
+                        <div class="layui-form-item layui-form-text">
+                            <div class="layui-input-block"  id="reply">
+                                <span id="huifu"></span>
+                                <textarea id="textarea" name="content" style="height:150px;width: 100%;"  ></textarea>
+                                <input type="hidden" name="tid" value="{$ask.id}" id="tid" />
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <button class="layui-btn submit-answer" lay-submit="" lay-filter="comment_add" style="background-color: rgb(23,179,241); border-radius: 5px">提交回答</button>
+                            <button class="layui-btn submit-edit"   data-id="0" lay-filter="comment_edit" style="display:none;background-color: rgb(23,179,241); border-radius: 5px">更新</button>
+                            <button class="layui-btn submit-edit-exit"   style="display:none;background-color: rgb(240,240,240); border-radius: 5px">取消</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+{/block}
+{block name="js"}
+<script type="text/javascript" src="__PUBLIC__/plugins/tinymce/tinymce.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/date.format.js"></script>
+{/block}
+{block name="script"}
+
+<script type="text/javascript">
+    futext('#textarea');
+
+</script>
+<script>
+
+  layui.use('form', function() {
+      var form = layui.form
+          , jq = layui.jquery;
+      jq('.comm-ask-solve').click(function () {
+          var $this=jq(this);
+          layer.confirm('确定采纳为此问题最佳答案?', {
+              btn: ['确定','取消'] //按钮
+          }, function(){
+              var aid=$this.data('id');
+              console.log(aid)
+              ajaxform({'aid':aid}," {:url('index/course/bestanswer')} ",jq,function (res) {
+                  location.reload();
+              });
+          }, function(){
+              layer.closeAll()
+          });
+
+      });
+      jq('.ask-edit').click(function () {
+          jq('.ask-title').hide();
+          jq('.ask-title-edit').show();
+          jq('.edit-btns').show();
+          jq('.ask-content').hide();
+          jq('.ask-content-edit').show();
+          futext("#ask-con");
+          jq('.edit-cal').click(function () {
+              jq('.ask-title').show();
+              jq('.ask-title-edit').hide();
+              jq('.edit-btns').hide();
+              jq('.ask-content').show();
+              jq('.ask-content-edit').hide();
+              return false;
+          })
+          jq('.edit-save').click(function () {
+              var title=jq('.title-edit').val();
+              var activeEditor = tinymce.editors[1];
+              var editBody = activeEditor.getBody();
+              activeEditor.selection.select(editBody);
+              var text = activeEditor.selection.getContent({'format': 'text'});
+             var con= tinyMCE.editors[1].getContent()
+
+              if (text.trim()==''){
+                  layer.msg('请输入必填项！', {icon: 2, time: 1000});
+                  return false;
+              }
+              loading = layer.load(2, {
+                  shade: [0.2,'#000']
+              });
+              var param = {
+                  'data': JSON.stringify({
+                      'content': con
+                      , 'title': title
+
+                  })
+              }
+              jq.post('{:url("index/course/updatevideoask",array("id"=>$ask.id))}',param,function(data){
+                  if(data.code == 200){
+                      layer.close(loading);
+                      layer.msg(data.msg, {icon: 1, time: 1000}, function(){
+                          location.reload();
+                      });
+                  }else{
+                      layer.close(loading);
+                      layer.msg(data.msg, {icon: 2, anim: 6, time: 1000});
+                  }
+              });
+              return false;
+          })
+
+
+      });
+
+
+      jq('.comm-ask-edit').click(function () {
+          jq(".submit-edit").unbind('click');
+          //comment-con
+          var con=jq(this).parent().parent().parent().parent().find('.comment-con span').html()
+          tinyMCE.activeEditor.setContent(con);
+          jq('.submit-edit').show();
+          jq('.submit-edit').data('id',jq(this).data('id'));
+          var aid=jq(this).data('id');
+          // console.log(aid)
+          jq('.submit-edit-exit').show();
+          jq('.submit-answer').hide();
+          jq('#edit-mode').html("<span style='color:#F7B824 ;font-size: 18px'>编辑模式</span>") ;
+          jq("html,body").animate({scrollTop:jq ("#reply").offset().top},1000);
+          jq('.submit-edit-exit').click(function () {
+              jq('.submit-edit').hide();
+              jq('.submit-edit-exit').hide();
+              jq('.submit-answer').show();
+              tinyMCE.activeEditor.setContent('');
+              jq('#edit-mode').html('');
+              return false;
+          })
+          // console.log
+          jq('.submit-edit').click(function () {
+
+              var aid=jq(this).data('id');
+              // console.log(jq(this).data('id'))
+              // console.log( jq('.submit-edit').data('id'))
+              console.log('r')
+              var activeEditor = tinymce.editors[0];
+              var editBody = activeEditor.getBody();
+              activeEditor.selection.select(editBody);
+              var text = activeEditor.selection.getContent({'format': 'text'});
+              var con= tinyMCE.editors[0].getContent()
+                // console.log(text);
+              if (text.trim()==''){
+                  layer.msg('请输入必填项！', {icon: 2, time: 1000});
+                  return false;
+              }
+              loading = layer.load(2, {
+                  shade: [0.2,'#000']
+              });
+              var param = {
+                  'data': JSON.stringify({
+                      'content': con
+
+                  })
+              }
+              jq.post('{:url("index/course/updatevideoanswer")}?aid='+aid,param,function(data){
+                  if(data.code == 200){
+                      layer.close(loading);
+                      layer.msg(data.msg, {icon: 1, time: 1000}, function(){
+                          location.reload();
+                      });
+                  }else{
+                      layer.close(loading);
+                      layer.msg(data.msg, {icon: 2, anim: 6, time: 1000});
+                  }
+              });
+              return false;
+          })
+
+
+      });
+
+      //comm-ask-edit
+  jq('span[type=zan]').click(function(){
+          var idnum=jq(this).data('id');
+          var obj=jq(this);
+          jq.post('{:url("course/zan")}',{'type':3,'id':idnum,'uid':'{$Think.session.userid}'},function(data){
+              if(data.code == 200){
+                  jq(obj).css('color','red');
+                  var intnum=parseInt(jq(obj).find('span').html());
+                  jq(obj).find('span').html(intnum+1);
+                  layer.msg(data.msg, {icon: 1, time: 1000}, function(){
+
+                  });
+              }else{
+                  layer.msg(data.msg, {icon: 2, anim: 6, time: 1000});
+              }
+          });
+
+      });
+      jq('span[type=reply]').click(function(){
+          jq("html,body").animate({scrollTop:jq ("#reply").offset().top},1000);
+          var idnum=jq(this).data('id');
+          var htmlname='@'+ jq(this).attr('data-name');
+          jq('#tid').val(idnum);
+          jq('#huifu').html('<i style="color:#F7B824">'+htmlname+'</i>');
+
+      });
+
+      form.on('submit(comment_add)', function(data){
+          var activeEditor = tinymce.activeEditor;
+          var editBody = activeEditor.getBody();
+          activeEditor.selection.select(editBody);
+          var text = activeEditor.selection.getContent({'format': 'text'});
+          if (text.trim()==''){
+              layer.msg('请输入必填项！', {icon: 2, time: 1000});
+              return false;
+          }
+
+          loading = layer.load(2, {
+              shade: [0.2,'#000']
+          });
+          var param = {
+              'data': JSON.stringify({
+                  'content': tinyMCE.activeEditor.getContent()
+                  , 'tid': jq('input[name=tid]').val()
+
+              })
+          }
+          jq.post('{:url("index/course/answer",array("id"=>$video.id))}',param,function(data){
+              if(data.code == 200){
+                  layer.close(loading);
+                  layer.msg(data.msg, {icon: 1, time: 1000}, function(){
+                      location.reload();
+                  });
+              }else{
+                  layer.close(loading);
+                  layer.msg(data.msg, {icon: 2, anim: 6, time: 1000});
+              }
+          });
+          return false;
+      });
+
+  })
+</script>
+{/block}

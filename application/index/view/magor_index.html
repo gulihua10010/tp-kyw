@@ -1,0 +1,103 @@
+{extend name="index_base" /}
+{block name="seo"}
+<title>{$site_config['site_title']}|{$site_config['seo_title']}</title>
+
+<meta name="keywords" content="{$site_config['seo_keyword']}">
+<meta name="description" content="{$site_config['seo_description']}">
+{/block}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/school.css"/>
+
+{/block}
+{block name="body"}
+{include file="other/menu"}
+    <div class="  clearfix wap12  " style="margin-top: 20px" >
+        <div class="side_L_x fl  ">
+            <div class="tab_title_Shx">
+                <div class=" "  >
+                    <div class="classify_ZY_x ">
+                        <div class="clearfix pt30 mb17 ">
+                            <div class="classify_L_x fl">学科门类：</div>
+                            <div class="classify_RTop_x fl">
+                                <div class="Colleges_R_x fl Col_x1">
+                                    <a href="{:url('index/magor/index',array('p'=>'0','t'=>$t))}" class='{if condition="$p eq 0"}on{/if}'>全部</a>
+                                    {volist name="pro" id="vo"}
+                                    <span><a href="{:url('index/magor/index',array('p'=>$vo.id,'t'=>$t))}" class='{if condition="$p eq $vo.id"}on{/if}'>{$vo.name}</a></span>
+                                    {/volist}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt_5 clearfix mb17">
+                            <div class="classify_L_x fl">专业类型：</div>
+                            <div class="classify_RTop_x fl classify_RTop_x1">
+                                <a href="{:url('index/magor/index',array('t'=>'0','p'=>$p))}"  class='{if condition="$t eq 0"}on{/if}'>全部</a>
+                                <span><a href="{:url('index/magor/index',array('t'=>'1','p'=>$p))}"  class='{if condition="$t eq 1"}on{/if}'>学士硕士</a></span>
+                                <span><a href="{:url('index/magor/index',array('t'=>'2','p'=>$p))}"  class='{if condition="$t eq 2"}on{/if}'>专业硕士</a></span>
+
+                            </div>
+                        </div>
+                        <form id="formName" action="{:url('index/magor/index')}" method="get">
+                            <div class="serSchoolBar">
+                                <input type="text" class="serSchoolIpt" placeholder="输入专业名称" name="keywords" value="">
+                                <input type="submit"   value="" style="cursor: pointer"
+                                       class="serSchoolBtn"/>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="rq_px_x">
+                        <div class="rq_cont mt10">
+                            <table width="859" border="0" cellpadding="0" cellspacing="0" id="rp_tab_x">
+                                <thead>
+                                <tr class="f33">
+                                    <td width="116" height="40">专业代码</td>
+                                    <td width="97" height="40">专业名称</td>
+                                    <td width="161">所属门类</td>
+                                    <td width="152">所属一级学科</td>
+                                    <td width="164">专业类型</td>
+                                    <td width="164">操作</td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {volist name="magors" id="vo"}
+                                <tr>
+                                    <td height="40">{$vo.code}<br></td>
+                                    <td height="40">{$vo.name}</td>
+                                    <td>{$vo.pname}</td>
+                                    <td>{$vo.sub}</td>
+                                    <td>{if condition="$vo.type eq 1 "}学术硕士{else/}专业硕士{/if}</td>
+                                    <td >
+                                        <a style="color: #1bc7f1;cursor: pointer" target="_blank" title="{$vo.name}" href="{:url('index/magor/detail',array('id'=>$vo.id))}">查看介绍</a> </td>
+                                </tr>
+                                {/volist}
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                        <div class="btable-paged  " >
+                                {$magors->render()}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="side_R_x fr">
+            <h4 class="pubRightTit"><span>同类型院校人气排名</span></h4>
+            <ul class="hotSchoolList">
+                {foreach  name="right_s" item="vo"  key="k"}
+                <li class="num{$k+1} noBor"><a href="{:url('index/magor/detail',array('id'=>$vo.id))} "
+                                               target="_blank">{$vo.name}</a>
+                </li>
+                {/foreach}
+            </ul>
+
+        </div>
+    </div>
+{/block}
+{block name="js"}
+{/block}
+{block name="script"}
+<script type="text/javascript">
+
+</script>
+{/block}

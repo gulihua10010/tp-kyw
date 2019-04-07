@@ -1,0 +1,126 @@
+{extend name="index_base" /}
+{block name="seo"}
+<title>{$site_config['site_title']}|{$site_config['seo_title']}</title>
+
+<meta name="keywords" content="{$site_config['seo_keyword']}">
+<meta name="description" content="{$site_config['seo_description']}">
+{/block}
+
+{block name="body"}
+{include file="index/menu"}
+<style>
+
+</style>
+<div class="banner-fu">
+    <div class="banner-box">
+        <div id="slideBox" class="slideBox">
+            <div class="hd">
+                <ul>
+                    <li class=""></li>
+                    <li class=""></li>
+                    <li class=""></li>
+                    <li class=""></li>
+                    <li class=""></li>
+                    <li class="on"></li>
+                </ul>
+            </div>
+            <div class="bd">
+                <div class="tempWrap" style="overflow:hidden; position:relative; width:1920px">
+                    <ul style="width: 15360px; position: relative; overflow: hidden; padding: 0px; margin: 0px; left: -11520px;">
+                        {volist name="ppt" id="vo"}
+                        <li style="float: left; width: 1920px;">
+                            <a href="{$vo.url}" target="_blank" class="banner"
+                               style="background: url(__ROOT__{$vo.path}) no-repeat center center;background-size:100% 100%;">
+                            </a>
+                        </li>
+                        {/volist}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    jQuery(".slideBox").slide({
+        mainCell: ".bd ul",
+        autoPlay: true,
+        effect: "leftLoop",
+        titCell: ".hd li"
+    });
+</script>
+<div class="content-index wbg ">
+    <div class="title-box">
+        <span class="title"><span>|</span>考研头条</span>
+        <div class="title-links">
+            <a href="javascript:void(0);" onclick="showTopic(0,this);" class="active">最新动态</a>
+            {volist name="arttype" id="vo"}
+            <a href="javascript:void(0);" onclick="showTopic('{$vo.id}',this);" class="">{$vo.name}</a>
+            {/volist}
+            <!-- 	<a href="javascript:showTopic(1);">资料下载</a> -->
+        </div>
+        <a href=" " target="_blank" class="more">更多</a>
+    </div>
+    <div class="con clearfix topicFlag" id="topic0" style="display: block;">
+        <div class=" ">
+            <ul class="news-img">
+                {volist name="newest_arts" id="v"}
+                <li>
+                    <a href=" " target="_blank" class="clearfix">
+									<span class="fl">
+										<img src="__ROOT__{$v.pic}" title="{$v.title}">
+									</span>
+                        <span class="news-img-right">
+										<span class="news-img-tit">{$v.title}</span>
+										<span class="news-img-con">{$v.content}</span>
+										<span class="news-img-info">
+											<span class="news-label">最新动态</span>
+											<span>{$v.time|date="Y-m-d",###}</span>
+											<span>阅读:{$v.readcount}</span>
+										</span>
+									</span>
+                    </a>
+                </li>
+                {/volist}
+            </ul>
+        </div>
+    </div>
+    {volist name="arts" id="vo"}
+    <div class="con clearfix topicFlag" id="topic{$vo.infoid}" style="display: none;">
+        <div class=" ">
+            <ul class="news-img">
+                {volist name="vo.arts" id="v"}
+                <li>
+                    <a href=" " target="_blank" class="clearfix">
+									<span class="fl">
+										<img src="__ROOT__{$v.pic}" title="{$v.title}">
+									</span>
+                        <span class="news-img-right">
+										<span class="news-img-tit">{$v.title}</span>
+										<span class="news-img-con">{$v.content}</span>
+										<span class="news-img-info">
+											<span class="news-label">{$vo.info}</span>
+											<span>{$v.time|date="Y-m-d",###}</span>
+											<span>阅读:{$v.readcount}</span>
+										</span>
+									</span>
+                    </a>
+                </li>
+                {/volist}
+            </ul>
+        </div>
+    </div>
+    {/volist}
+</div>
+<script>
+    layui.use(['form','layer'], function () {
+        var form = layui.form
+            , jq = layui.jquery;
+
+    });
+    function showTopic(id, obj) {
+        $('.topicFlag').hide();
+        $('#topic' + id).show();
+        $(obj).addClass("active").siblings("a").removeClass("active");
+    }
+</script>
+{/block}

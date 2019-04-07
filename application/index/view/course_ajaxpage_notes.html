@@ -1,0 +1,47 @@
+{volist name="notes" id="vo"}
+<div class="wenda-listcon mod-qa-list post-row clearfix" data-id="{$vo.userid}">
+    <div class="headslider qa-medias fl"><a href="{:url('user/index/home',array('id'=>$vo.userid))}"
+                                            class="media" target="_blank" title="{$vo.username}"><img
+            src="__ROOT__{$vo.userhead}"
+            width="40" height="40"></a></div>
+    <div class="wendaslider qa-content">
+        <div class="tit"><a href="{:url('user/index/home',array('id'=>$vo.userid))}" target="_blank">{$vo.username}</a>
+        </div>
+        <div class="cnt">{$vo.content|clearHTMLhead|cutstr_html=100}</div>
+        <div class="replymegfooter qa-footer clearfix">
+            <div class="l-box fl"><a title="赞" href="javascript:(0);"
+                                     class="js-pl-praise moco-btn moco-btn-gray-l" type="5"
+                                     data-id="{$vo.id}"> <i {php}if(in_array($vo['id'],$d5s))echo ('style="color:red"'); {/php}
+                class="iconfont">&#xe611;</i> <em>{$vo.praise}</em> </a>
+            </div>
+            <span class=" timeago">{$vo.time|friendlyDate}</span>
+            <span style='margin-left: 20px'><a target='_blank'href="{:url('index/course/notedetail',array('nid'=>$vo.id))}">查看全文</a> </span>
+        </div>
+    </div>
+</div>
+{/volist}
+<div class="note-page">
+{$npage}
+</div>
+<script>
+    layui.use(['layer', 'form', 'element' ], function () {
+
+        var   jq = layui.jquery
+            , layer = layui.layer
+            , form = layui.form;
+        jq(".note-page .pagination a").click(function(){
+            var url = jq(this).attr('href');
+            jq.ajax({
+                'type' : 'post',
+                'url'  :  url,
+                'data':{'type':3,'vid':'{$vid}'},
+                success:function(data){
+                    jq('.course_note').html(data);
+                }
+            })
+            return false;
+        });
+  });
+
+
+</script>

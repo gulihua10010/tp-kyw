@@ -1,0 +1,122 @@
+{extend name="index_base" /}
+{block name="seo"}
+<title>{$site_config['site_title']}|{$site_config['seo_title']}</title>
+
+<meta name="keywords" content="{$site_config['seo_keyword']}">
+<meta name="description" content="{$site_config['seo_description']}">
+{/block}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/school.css"/>
+
+{/block}
+{block name="body"}
+{include file="other/menu"}
+    <div class="  clearfix wap12  "  style="margin-top: 20px">
+        <div class="side_L_x fl  ">
+            <div class="tab_title_Shx">
+                <div class=" "  >
+                    <div class="classify_ZY_x ">
+                        <div class="clearfix pt30 mb17 ">
+                            <div class="classify_L_x fl">所属地区：</div>
+                            <div class="classify_RTop_x fl">
+                                <div class="Colleges_R_x fl Col_x1">
+                                    <a href="{:url('index/school/index',array('v'=>'0','p'=>$p,'t'=>$t,'b'=>$b))}" class='{if condition="$v eq 0"}on{/if}'>全部</a>
+                                    {volist name="provice" id="vo"}
+                                    <span><a href="{:url('index/school/index',array('v'=>$vo.id,'p'=>$p,'t'=>$t,'b'=>$b))}" class='{if condition="$v eq $vo.id"}on{/if}'>{$vo.name}</a></span>
+                                    {/volist}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt_5 clearfix mb17">
+                            <div class="classify_L_x fl">学校属性：</div>
+                            <div class="classify_RTop_x fl classify_RTop_x1">
+                                <a href="{:url('index/school/index',array('p'=>'0','v'=>$v,'t'=>$t,'b'=>$b))}"  class='{if condition="$p eq 0"}on{/if}'>全部</a>
+                                {volist name="prop" id="vo"}
+                                <span><a href="{:url('index/school/index',array('p'=>$vo.id,'v'=>$v,'t'=>$t,'b'=>$b))}"  class='{if condition="$p eq $vo.id"}on{/if}'>{$vo.name}</a></span>
+                                {/volist}
+                            </div>
+                        </div>
+                        <div class=" clearfix mb17">
+                            <div class="classify_L_x fl">学校类型：</div>
+                            <div class="classify_RTop_x fl classify_RTop_x2">
+                                <a href="{:url('index/school/index',array('t'=>'0','p'=>$p,'v'=>$v,'b'=>$b))}" class='{if condition="$t eq 0"}on{/if}'>全部</a>
+                                {volist name="type" id="vo"}
+                                <span><a href="{:url('index/school/index',array('t'=>$vo.id,'p'=>$p,'v'=>$v,'b'=>$b))}"   class='{if condition="$t eq $vo.id"}on{/if}'>{$vo.name}</a></span>
+                                {/volist}
+                            </div>
+                        </div>
+                        <div class=" clearfix mb17">
+                            <div class="classify_L_x fl">学校隶属：</div>
+                            <div class="classify_RTop_x fl classify_RTop_x3">
+                                <a href="{:url('index/school/index',array('b'=>'0','p'=>$p,'t'=>$t,'v'=>$v))}" class='{if condition="$b eq 0"}on{/if}'>全部</a>
+                                {volist name="belong" id="vo"}
+                                <span><a href="{:url('index/school/index',array('b'=>$vo.id,'p'=>$p,'t'=>$t,'v'=>$v))}"   class='{if condition="$b eq $vo.id"}on{/if}'>{$vo.name}</a></span>
+                                {/volist}
+                            </div>
+                        </div>
+                        <form id="formName" action="{:url('index/school/index')}" method="get">
+                            <div class="serSchoolBar">
+                                <input type="text" class="serSchoolIpt" placeholder="输入院校名称" name="keywords" value="">
+                                <input type="submit"   value="" style="cursor: pointer"
+                                   class="serSchoolBtn"/>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="rq_px_x">
+                        <ul class="information_x">
+                            {volist name="schools" id="vo"}
+                            <li class="clearfix mb16">
+                                <div class="information_L_x fl">
+                                    <a href="{:url('index/school/detail',array('id'=>$vo.id))}" target="_blank"><img
+                                            src="__ROOT__{$vo.badge}"></a>
+                                    <a href="{:url('index/school/detail',array('id'=>$vo.id))}" target="_blank"><p>{$vo.name}</p>
+                                    </a>
+                                </div>
+                                <div class="information_R_x fl">
+                                    <div class="information_R_Topx">
+                                        {php}$prop=explode(',',$vo['prop']);foreach($prop as $v) echo ("<span>$v</span>"); {/php}
+                                    </div>
+                                    <p class="information_R_Titlex">
+                                        <span>地点：{$vo.vname}</span>|<span>院校类型：
+                                     {php}$type=explode(',',$vo['prop']);foreach($type as $v) echo ("<span>$v</span>"); {/php}</span>
+                                    </p>
+                                    <div class="information_R_Contx">
+                                        <a href="{:url('index/school/detail',array('id'=>$vo.id,'t'=>'1'))}" target="_blank">学校简介</a>|
+                                        <a href="{:url('index/school/detail',array('id'=>$vo.id,'t'=>'2'))}" target="_blank">招生简章</a>|
+                                        <a href="{:url('index/school/detail',array('id'=>$vo.id,'t'=>'3'))}" target="_blank">招生专业</a>|
+                                        <a href="{:url('index/school/detail',array('id'=>$vo.id,'t'=>'4'))}" target="_blank">分数线</a>|
+                                        <a href="{:url('index/school/detail',array('id'=>$vo.id,'t'=>'5'))}" target="_blank">复试</a>
+                                    </div>
+                                </div>
+                            </li>
+                            {/volist}
+
+
+                        </ul>
+                        <div class="btable-paged  " >
+                                {$schools->render()}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="side_R_x fr">
+            <h4 class="pubRightTit"><span>同类型院校人气排名</span></h4>
+            <ul class="hotSchoolList">
+                {foreach  name="right_s" item="vo"  key="k"}
+                <li class="num{$k+1} noBor"><a href="{:url('index/school/detail',array('id'=>$vo.id,'t'=>'1'))} "
+                                               target="_blank">{$vo.name}</a>
+                </li>
+                {/foreach}
+            </ul>
+
+        </div>
+    </div>
+{/block}
+{block name="js"}
+{/block}
+{block name="script"}
+<script type="text/javascript">
+
+</script>
+{/block}

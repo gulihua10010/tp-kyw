@@ -1,0 +1,31 @@
+<div class="nav-box">
+    <div class="content-index nav-c">
+        <div class="nav-tit fl">
+            <p>课程导航</p>
+            <div class="tit-list tit-list1">
+                <dl class="project-list">
+                    {volist name="pptnav" id="vo"}
+                    <dd>
+                        <span>{$vo.name}&nbsp;<span>|</span></span>
+                        {volist name="vo.child" id="sub"}
+                        <a href="{$sub.link|getnavlink=$sub.sid}" target="{$sub.target}">{$sub.name}</a>
+                        {/volist}
+                    </dd>
+                    {/volist}
+                </dl>
+            </div>
+        </div>
+        <ul class="nav-sub fl"  >
+            {volist name="infonav" id="vo"}
+            <li><a href="{$vo.link|getnavlink=$vo.sid}" target="{$vo.target}">{$vo.name}</a>
+                <ul>
+                    {volist name="vo.child" id="vo1"}
+                    <li><a href="{$vo1.link|getnavlink=$vo1.sid}" target="{$vo1.target}">{$vo1.name}</a></li>
+                    {/volist}
+                </ul>
+            </li>
+            <!-- <li><a href="#" target="_blank">成功学员</a></li> -->
+            {/volist}
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,80 @@
+{extend name="index_base" /}
+{block name="seo"}
+<title>{$site_config['site_title']}|{$site_config['seo_title']}</title>
+
+<meta name="keywords" content="{$site_config['seo_keyword']}">
+<meta name="description" content="{$site_config['seo_description']}">
+{/block}
+
+{block name="css"}
+{/block}
+{block name="body"}
+<div class="content-index">
+    <div class="main-mid user-x-top">
+            <a target="_blank" href="{:url('user/index/home',array('id'=>$m.id))}" title="{$m.username}">
+                <img src="__ROOT__{$m.userhead}" title="{$m.username}"></a>
+            <span><a target="_blank" href="{:url('user/index/home',array('id'=>$m.id))}" title="{$m.username}">
+                {$m.username}学过的课程</a></span><span>  </span>
+                <div class="user-x-btn" style="float: right">
+                    <span type="edit"><a style="color:#999"  class="ask-edit" target="_blank" href="{:url('user/index/home',array('id'=>$m.id))}">TA的个人中心</a></span>
+                </div>
+
+    </div>
+        <div class=" main-mid x-main ">
+                <ul>
+                    {volist name="course" id="vo"}
+                <li  >
+                    <div class="clist-box">
+                        <div class="fl"  >
+                            <img title="{$vo.cname}" src="__ROOT__{$vo.cpic}">
+                        </div>
+                        <div class="fr" style="width: 80%">
+                            <div class="flist-title"><span>
+                                <a href="{:url('index/course/detail',array('id'=>$vo.cid))}" target="_blank"  class=" cb"> {$vo.cname}</a>
+                            </span></div>
+                            <div style="padding-left: 30px;font-size: 18px;margin-top: 10px">
+                                   <span>课程视频名称:{$vo.vname}</span>
+                            </div>
+                            <div class="flist-bottom  ">
+                                <div class="fr">
+                                        <span>授课教师:{$vo.teacher}</span>
+                                        <span>课时:{$vo.classhour}</span>
+                                        <span>评分:{if condition="$vo['cstar'] eq 0"}0{/if}
+                        {php} for($i=0;$i<$vo['cstar'];$i++) echo(" <i
+                                                class='iconfont' style='color: #ffcc6f'>&#xe60a;</i> ");{/php}
+                                        </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                   {/volist}
+            </ul>
+
+        </div>
+
+
+</div>
+
+
+
+{/block}
+{block name="js"}
+<script type="text/javascript" src="__PUBLIC__/js/date.format.js"></script>
+{/block}
+{block name="script"}
+
+<script type="text/javascript">
+
+</script>
+<script>
+
+  layui.use('form', function() {
+      var form = layui.form
+          , jq = layui.jquery;
+
+
+
+  })
+</script>
+{/block}

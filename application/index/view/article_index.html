@@ -1,0 +1,107 @@
+{extend name="index_base" /}
+{block name="seo"}
+<title>{$site_config['site_title']}|{$site_config['seo_title']}</title>
+
+<meta name="keywords" content="{$site_config['seo_keyword']}">
+<meta name="description" content="{$site_config['seo_description']}">
+{/block}
+{block name="css"}
+<link rel="stylesheet" href="__PUBLIC__css/article.css">
+
+{/block}
+{block name="body"}
+{include file="other/menu"}
+<div class="content-index">
+    <div class="main-mid">
+        <ul class="choose-list">
+            <li class="li-bg">
+                <label>分类：</label>
+                <a href="{:url('index/article/index',['type'=>0])}" name="category" tip="0" {if condition="$t eq 0" }
+                   class="active" {/if}>全部</a>
+                {volist name="info" id="vo"}
+                <a href="{:url('index/article/index',['type'=>$vo.id])}" name="category" tip="{$vo.id}" {if
+                   condition="$t eq $vo.id" } class="active" {/if}>{$vo.name}</a>
+                {/volist}
+            </li>
+
+        </ul>
+    </div>
+
+    <div class=" index-main ">
+            <div class="article-list">
+                {foreach name="arts" item="article"}
+                <div class="article-breviary">
+                    <div class="art-bre-tit">
+                        {if condition="($article.info!=null)"} <span class="art-type">
+                {$article.info}
+                 </span>{/if}
+                        <a class="art-title"  title="{$article.title}" target="_blank" href="{:Url('index/article/detail',['id'=>$article.id])}">
+                        {$article.title}</a>
+                    </div>
+                    <div class="art-bre-top ">
+                        <div class="art-bre-left"
+                             onclick="window.location.href='{:Url(\'index/article/detail\',[\'id\'=>$article.id])}'">
+                            <img src="__ROOT__{$article.pic}" width="200" alt="{$article.title}">
+                            <div></div>
+                        </div>
+                        <div class="art-bre-right  ">
+                            <span class="article-content-bre">{$article.content|clearcontent|cutstr_html=100}</span>
+                            <div class="art-bre-info ">
+                                <span>
+                                    <span class="art-author"><i class="iconfont">&#xe678;</i>&nbsp;{$article.author}</span>
+                                    <span class="art-date"><i class="iconfont">&#xe65e;</i>&nbsp;{$article.time|friendlyDate}</span>
+                                    <span class="art-readers"><i class="iconfont">&#xe629;</i>&nbsp;{$article.readcount}</span>
+                                    <a class="art-comment"  title="{$article.title}" target="_blank"
+                                       href=" {:Url('index/article/detail',['id'=>$article.id])}#comments">
+                                        <i class="iconfont">&#xe644;</i>&nbsp;{$article.comms}条评论</a>
+                                    <span class="art-goods before-goods-add" data-id="{$article.id}"><i
+                                            {php}if(in_array($article['id'],$zans))echo ('style="color:red"'); {/php} class="iconfont">&#xe611;</i>
+                                        <span>{$article.praise}</span>
+                        </span>
+                                    <span style="display: none" class="artid">{$article.id}</span>
+
+                                </span>
+                                <span class=""><a   title="{$article.title}" target="_blank"
+                                          href=" {:Url('index/article/detail',['id'=>$article.id])}">阅读全文</a></span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                {/foreach}
+                <div class="btable-paged  " >
+                    {$arts->render()}
+                </div>
+            </div>
+        </div>
+
+   <div class="art-right">
+       <h4 class="pubRightTit"><span>最新资讯</span></h4>
+       <ul class="hotSchoolList">
+           {foreach  name="right_a" item="vo"  key="k"}
+           <li class="num{$k+1} noBor"><a href="{:url('index/article/detail',array('id'=>$vo.id))} "
+                                          target="_blank">{$vo.title}</a>
+           </li>
+           {/foreach}
+       </ul>
+
+   </div>
+</div>
+
+
+{/block}
+{block name="js"}
+{/block}
+{block name="script"}
+<script type="text/javascript">
+$('.art-goods').click(function () {
+    var $this=$(this);
+    var id=$(this).data('id')
+    var t= $(this).find('span').text()
+    ajaxform({'id':id},'{:url("index/article/zan")}',$,function () {
+        $this.find('i').css('color','red');
+        $this.find('span').text(parseInt(t)+1)
+    })
+})
+</script>
+{/block}

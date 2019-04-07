@@ -1,0 +1,385 @@
+{extend name="index_base" /}
+{block name="seo"}
+<title>{$site_config['site_title']}|{$site_config['seo_title']}</title>
+
+<meta name="keywords" content="{$site_config['seo_keyword']}">
+<meta name="description" content="{$site_config['seo_description']}">
+{/block}
+
+{block name="css"}
+<link rel="stylesheet" href="__PUBLIC__css/course.css">
+
+{/block}
+{block name="body"}
+{include file="other/menu"}
+<div class="wrapper ">
+    <div class="detail-header clearfix" id="J_package">
+        <div class="detail-h">
+        <div class="preview fl">
+            <img id="J_videoImg" src="__ROOT__{$course.pic}" title="{$course.name}"
+                 alt="{$course.name}">
+        </div>
+        <div class="info fl">
+            <div class="title">
+                <h1 title="{$course.name}">{$course.name}</h1>
+            </div>
+            <div class="course-detail clearfix fcz">
+                <div class="fl" style="width:50%">
+                    学习人数：{$course.learnperson}人
+                </div>
+                <div class="fl" style="width:50%">
+                    <label class="fl">评分：</label>
+                    <p class="b-star-box fl">
+                        {php} for($i=0;$i<$course['star'];$i++) echo(" <span class='full-s'><i
+                            class='iconfont' style='color: #ffcc6f'>&#xe60a;</i></span>");{/php}
+                    </p>
+                </div>
+                <div class="fl" id="td" style="width:50%">
+                    课时：{$course.classhour}
+                </div>
+            </div>
+
+            <div class="mb20 price-wrap">
+                <div class="clearfix">
+                    <div class="price fl clearfix">
+                        <div class="fl clearfix">
+                            <p class="fs30 price-green">免费</p>
+                        </div>
+                        <div class="fl clearfix">
+                            <a class="consult" href="javascript:(0);" id="fav" style="cursor: pointer">
+                                {if condition="$isFav==1"}<i class="iconfont"
+                                                             style="color: #ffcc6f">&#xe60a;</i><em>已收藏</em>{else/}<i
+                                    class="iconfont">&#xe60a;</i><em>收藏</em>{/if}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="detail-main clearfix">
+        <div class="main-left">
+
+            <div>
+                <div class="mainLeftNav" id="mainLeftNav">
+
+
+                    <a href="javascript:;" class="active" id="study" style="width: 34%;">在线学习</a>
+                    <a href="javascript:;" style="width: 33%;">课程介绍</a>
+                    <a href="javascript:;" style="width: 33%;">用户评论</a>
+                </div>
+
+                <div class="bgwhite clist cour-list">
+                    {foreach name="videos" item="vo" key="k"}
+                    <div class="course-item-0">
+                        <h3>{$k+1}、{$vo.name}</h3>
+                        <div class="course-list">
+                            <ul>
+                                {foreach name="vo.sub" item="sub" key="s"}
+                                <li class="course-item  ">
+                                    <dl class="module-list course-hour-item  ">
+                                        <dd class="module-item  ">
+                                            <div class="course-tit-info">
+                                                <span class="course-tit">{if condition="$sub.video neq ''"}<i class="iconfont">&#xe62a;</i>{/if}&nbsp;{$k+1}.{$s+1}、 {$sub.name}</span>
+                                                {if condition="$sub.video neq ''"}
+                                                <div class="fr">
+                                                    <span class="duration shichang"
+                                                          shichang="1808">时长 ： {$sub.duration}</span>
+                                                    <a class="item-btn show-video" {php}if(in_array($sub['id'],$watches)){ echo ("data-name='1'");}else {echo ("data-name='0'");} {/php}  style="cursor: pointer" data-id="{$sub.id}">【立即观看】</a>
+                                                </div>
+                                                {/if}
+                                            </div>
+                                        </dd>
+                                    </dl>
+                                </li>
+                                {/foreach}
+                            </ul>
+                        </div>
+                    </div>
+                    {/foreach}
+                </div>
+                <div class="bgwhite   clist">
+                    <h3>课程介绍</h3>
+                    <div class="txt">
+                        <p>
+                            {$course.introduce|clearHTMLhead}
+                        </p>
+                    </div>
+                </div>
+                <div class="clist bgwhite">
+                    <h3>用户评论</h3>
+                    <div class="content-box">
+                        <div class="answer-top clearfix">
+                            <div class="phone fl">
+                                <em class="phone-bg">
+                                    <img style="border-radius: 30px" src='{if condition="$Think.session.userhead eq ''"}__PUBLIC__images/defaultbw.png{else/}__ROOT__{$Think.session.userhead}{/if}'>
+                                </em>
+                            </div>
+                            <div class="fl">
+                                <div class="df-text fl"><span class="redc">*</span>我要打分</div>
+                                <div id="stars" style="margin-left: 30px"></div><span id="start-value"></span>
+                            </div>
+                        </div>
+                        <div class="answer-mid clearfix">
+                                <textarea class="origin-color" maxlength="300" placeholder="扯淡、吐槽、表扬...想说啥说啥"
+                                          id="content"></textarea>
+                            <a class="submitBtn submit-btn add-comment" href="javascript:(0);">发布</a>
+                        </div>
+                        <div class="answer-bottom">
+                            <dl class="answer-list">
+                                <dd style="display:none;" id="addComment"></dd>
+                                {volist name="comms" id="vo"}
+                                <dd class="list-item">
+                                    <div class="phone">
+                                        <em class="phone-bg">
+                                            <img src="__ROOT__{$vo.userhead}"/>
+                                        </em>
+                                    </div>
+                                    <div class="comment-box">
+                                        <div class="comment-edit clearfix">
+                                            <span class="fl">{$vo.username}</span>
+                                            <div class="star-box fl">
+                                                {php} for($i=0;$i<$vo['star'];$i++)echo(' <span class="n-s active"><i class="iconfont" style="color: #ffcc6f">&#xe60a;</i> </span>');{/php}
+
+                                            </div>
+                                        </div>
+                                        <div class="comment-des">
+                                            {$vo.content|clearHTMLhead}
+                                        </div>
+                                        <p class="operate-box">时间{$vo.time|friendlyDate}</p>
+                                    </div>
+                                </dd>
+                                {/volist}
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main-right">
+            <div class="other-see bgwhite refreshMore">
+                <div class="tea-tit">学过的人还学了</div>
+                <ul>
+                    {volist name="right_tj" id="vo"}
+                    <li>
+                        <a target="_blank" href="{:Url('index/course/detail',['id'=>$vo.id])}">
+                            <img src="__ROOT__{$vo.pic}">
+                            <span class="courseText" title="{$vo.name}">{$vo.name}</span>
+                        </a>
+                        <div class="clearfix">
+                            <span class="coursePrice pred">免费</span>
+
+                            <span class="courseTime">{$vo.learnperson}在学</span>
+                        </div>
+                    </li>
+                    {/volist}
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{/block}
+{block name="js"}
+<script type="text/javascript" src="__PUBLIC__/plugins/tinymce/tinymce.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/date.format.js"></script>
+{/block}
+{block name="script"}
+<script type="text/javascript">
+
+    layui.use(['layer', 'form', 'element','rate' ], function () {
+        var rate = layui.rate
+            , $ = layui.jquery
+            , layer = layui.layer
+            , form = layui.form;
+        futext('#content');
+        rate.render({
+            elem: '#stars'
+            , value: 5 //初始值
+            , text: true //开启文本
+            ,choose: function(value){
+                $('#start-value').val(value);
+            }
+        });
+
+    var oNav = $('#mainLeftNav');
+    var aNav = oNav.find('a');
+    var aDiv = $('.main-left .clist');
+    $(window).scroll(function () {
+        var winH = $('#J_package').height();
+        var iTop = $(window).scrollTop();
+        if (iTop >= winH) {
+            aDiv.each(function () {
+                if (iTop - $(this).offset().top > $(this).height() / 2) {
+                    oNav.addClass('nav-fixed');
+                    aNav.removeClass('active');
+                    aNav.eq($(this).index()).addClass('active');
+                }
+            })
+        } else {
+            oNav.removeClass('nav-fixed');
+            aNav.removeClass('active');
+            aNav.eq(0).addClass('active');
+        }
+    })
+    aNav.click(function () {
+        var t = aDiv.eq($(this).index()).offset().top;
+        $('body,html').animate({"scrollTop": t - 35}, 500);
+        $(this).addClass('active').siblings().removeClass('active');
+    });
+    $('#fav').click(function () {
+        '{if condition = "$Think.session.userid  eq ''"}'
+        showLogin();
+        return;
+        '{/if}'
+            var msg = $("#fav em").html().trim();
+            var method = '';
+            if (msg == '收藏') {
+                method = 'addFavoritesItems';
+                msg = '已收藏';
+            } else {
+                msg = '收藏';
+                method = 'delFavoritesItems';
+            }
+            var url = '{:Url("index/course/method")}';
+            url = url.replace(/method/, method);
+            $.ajax({
+                url: url,
+                type: "post",
+                dataType: "json",
+                data: {"uid": "{$Think.session.userid}", "cid": "{$course.id}"},
+                success: function (res) {
+                    if (res.code == 200) {
+                        if (method == 'addFavoritesItems') {
+                            $("#fav").find('i').css('color', '#ffcc6f');
+                            layer.msg(res.msg, {icon: 1, time: 1000}, function () {
+
+                            });
+                        } else if (method == 'delFavoritesItems') {
+                            $("#fav").find('i').removeAttr("style");
+                            layer.msg(res.msg, {icon: 1, time: 1000}, function () {
+
+                            });
+                        }
+                        $("#fav em").html(msg);
+                    } else {
+                        layer.msg(res.msg, {icon: 2, time: 1000}, function () {
+                        });
+                    }
+                },
+                error: function (res) {
+                    layer.msg('加载失败', {icon: 2, time: 1000}, function () {
+                    });
+
+                }
+            });
+        });
+$('.show-video').click(function () {
+    var vid=$(this).attr('data-id');
+    var cid="{$course.id}";
+    '{if condition = "$Think.session.userid  eq ''"}'
+    showLogin();
+    return;
+    '{/if}'
+    var iswatch=$(this).data('name');
+    // console.log(iswatch)
+    if (iswatch==1){
+        layer.confirm('此视频已经看过了，可以直接观看！', {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+            window.open("{:Url('index/course/showvideo')}?vid="+vid+"&cid="+cid);
+
+            layer.closeAll()
+        }, function(){
+            layer.closeAll()
+        });
+    }else{
+        layer.confirm('观看此视频需要消耗{$course.point}积分，确定观看?', {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+            ajaxform({'point':'{$course.point}'}," {:url('index/course/watchpoint')}?vid="+vid+"&cid="+cid,$,function (res) {
+                window.open("{:Url('index/course/showvideo')}?vid="+vid+"&cid="+cid);
+                layer.closeAll()
+            });
+        }, function(){
+            layer.closeAll()
+        });
+    }
+
+})
+
+        $('.add-comment').click(function () {
+            '{if condition = "$Think.session.userid  eq ''"}'
+            showLogin();
+            return;
+            '{/if}'
+                var activeEditor = tinymce.activeEditor;
+                var editBody = activeEditor.getBody();
+                activeEditor.selection.select(editBody);
+                var text = activeEditor.selection.getContent({'format': 'text'});
+               var content =tinyMCE.activeEditor.getContent();
+                var num = $('#start-value').val()  ;
+            if (text == '' || text.trim() == '') {
+                console.log(num)
+                layer.msg('请输入留言评价后再提交', {icon: 2, time: 1000}, function () {
+                });
+                return;
+            }
+          num= num==0?5:num;
+            $.ajax({
+                url: '{:Url("index/course/addCommon")}',
+                type: "post",
+                dataType: "json",
+                data: {"uid": "{$Think.session.userid}", "cid": "{$course.id}", "content": content, "star": num},
+                success: function (res) {
+                    if (res.code == 200) {
+                        var datetime = new Date().Format("yyyy-MM-dd hh:mm:ss");
+                        var str = '';
+                        str += '<dd class="list-item">';
+                        str += '<div class="phone">';
+                        str += '	<em class="phone-bg">';
+                        str += '	<img src="__ROOT__{$Think.session.userhead}"/>';
+                        str += '		</em>';
+                        str += '	</div>';
+                        str += '	<div class="comment-box">';
+                        str += '		<div class="comment-edit clearfix">';
+                        str += '			<span class="fl">{$Think.session.username}</span>';
+                        str += '			<div class="star-box fl">';
+                        for (var i = 1; i <= num; i++) {
+                                str += '<span class="n-s active"><i class="iconfont" style="color: #ffcc6f">&#xe60a;</i> </span>';
+                        }
+                        str += '			</div>';
+                        str += '		</div>';
+                        str += '		<div class="comment-des">';
+                        str += content;
+                        str += '		</div>';
+                        str += '		<p class="operate-box">时间：' + datetime + '</p>';
+                        str += '	</div>';
+                        str += '</dd>';
+                        $('#addComment').after(str);
+                        $("#content").val('');
+                        $('#nocomments').remove();
+                        layer.msg(res.msg, {icon: 1, time: 1000}, function () {
+
+                        });
+                    } else {
+                        layer.msg(res.msg, {icon: 2, time: 2000}, function () {
+
+                        });
+                    }
+                },
+                error: function (res) {
+                    layer.msg('加载失败', {icon: 2, time: 1000}, function () {
+                    });
+
+                }
+            });
+        });
+
+  });
+
+</script>
+
+{/block}

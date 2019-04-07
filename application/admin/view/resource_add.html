@@ -1,0 +1,151 @@
+{extend name="base" /}
+{block name="body"}
+<!--tab标签-->
+<div class="layui-tab-brief">
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+            <form class="layui-form form-container"     id="layui-form"
+                  localtion-url="{:url('admin/resource/index')}">
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">资源名称</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="name" required lay-verify="required" placeholder="必填内容"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+
+                <div class="layui-form-item" style="width: 300px">
+                    <label class="layui-form-label">资源类别</label>
+                    <div class="layui-input-block">
+                        {if condition="$types eq  null"}
+                         <a style="color: red">请先添加类别</a>
+                        {else/}
+                        <select name="tid" id="tid">
+                            {volist name="types" id="vo"}
+                            <option value="{$vo.id}">{neq name="vo.level"
+                                value="1"}|{php}for($i=1;$i<$vo['level'];$i++){echo ' --';}{/php}{/neq}{$vo.name}
+                            </option>
+                            {/volist}
+                        </select>
+                        {/if}
+                    </div>
+                </div>
+                <div class="layui-form-item" style="width: 300px">
+                    <label class="layui-form-label">需要积分</label>
+                    <div class="layui-input-block">
+                        <input type="number" name="point"   placeholder="请填写整数" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                    <div class="label-tint">不填为系统设置的默认积分值</div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">资料文件</label>
+                    <div class="layui-input-inline">
+                        <button type="button" class="layui-btn" id="data" name="dd">
+                            <i class="layui-icon">&#xe67c;</i>上传资料
+                        </button>
+                        <input type="text" name="data" class="layui-input"
+                               style="position: absolute;left: 111px;top: 0px;width: 500px;" lay-verify="required">
+                    </div>
+                    <div class="label-tint">上传资料为zip或rar压缩文件、word、pdf文档(压缩文件如果有密码在描述里说明)</div>
+                </div>
+                <div class="layui-form-item"  id="uploading-data" style="position: relative ;display: none" >
+                    <label class="layui-form-label">上传进度</label>
+                        <div class="layui-progress" lay-showpercent="true" lay-filter="process"
+                             style="  width: 60%;position: absolute;left: 110px;top:16px" >
+                            <div class="layui-progress-bar layui-bg-green" lay-percent="0%"></div>
+                        </div>
+
+
+                </div>
+               <!--S-->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">关键词</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="keywords" placeholder="关键词请用|隔开" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">描述</label>
+                    <div class="layui-input-block">
+                        <textarea name="des" placeholder="请输入内容" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+                <div class="btable-paged">
+                    <div class="layui-main">
+                        <div class="formbtngroup">
+                            <button class="layui-btn layui-btn-small" lay-submit="" lay-filter="formadd"  {if condition="$types eq  null"} disabled {/if}>添加</button>
+                            <button onclick="history.go(-1);" class="layui-btn layui-btn-primary layui-btn-small">返回
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="js"}
+<script src="__ADMIN__/js/common.js"></script>
+{/block}
+{block name="script"}
+<script>
+    layui.use(['layer', 'form', 'element', 'upload'], function () {
+
+        var form = layui.form
+            , $ = layui.jquery
+            , upload = layui.upload
+            , element = layui.element
+        //刷新界面 所有元素
+        form.render();
+        upload.render({
+            url: '{:url("admin/upload/upfile")}'
+            , elem: '#data'
+            ,accept:'file'
+            , exts: 'zip|doc|pdf|rar|docx|txt|'
+            , progress: function (e, percent) {
+                element.progress('process', percent + "%");
+
+            }
+            , before: function (input) {
+                $('#uploading-data').css('display','block')
+                loading = layer.load(2, {
+                    shade: [0.2, '#000']
+                });
+            }
+            , done: function (res) {
+                layer.close(loading);
+                $('input[name=data]').val(res.path);
+                layer.msg(res.msg, {icon: 1, time: 1000});
+                // $('#uploaded-image').attr('src',getRootPath_web()+res.path);
+            }, error: function () {
+                layer.close(loading);
+                layer.msg('上传出错：1', {
+                    title: '提示'
+                    //不自动关闭
+                    , time: 1000
+                    , icon: 5
+                    , offset: '400px'
+                });
+            }
+        });
+//resource resourcw  rescourcw
+//resourcw rescourcw
+        form.on('submit', function(data){
+            var formdata=$('#layui-form').serialize();
+            ajaxform(formdata," {:url('admin/resource/save')} ",$,function () {
+                window.location.href="{:url('admin/resource/index')}";
+            })
+            return false;
+        });
+    });
+
+
+</script>
+{/block}

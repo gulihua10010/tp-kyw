@@ -1,0 +1,42 @@
+{extend name="index_base" /}
+{block name="seo"}
+<title>{$site_config['site_title']}|{$site_config['seo_title']}</title>
+
+<meta name="keywords" content="{$site_config['seo_keyword']}">
+<meta name="description" content="{$site_config['seo_description']}">
+{/block}
+
+{block name="css"}
+<link rel="stylesheet" href="__PUBLIC__css/index(3).css">
+<style>
+    .main1{
+        position: relative;
+        width: 100%;
+        height: 110px;
+       background-color: lime;
+    }
+
+
+</style>
+{/block}
+{block name="body"}
+{include file="other/menu"}
+<div class="content-main">
+    <div class="wrapper ">
+        <div class="detail-header clearfix" id="J_package">
+
+    <div class="main1">
+</div>
+</div>
+</div>
+</div>
+
+<script type="text/javascript">
+    layui.use('form', function () {
+        var form = layui.form
+            , jq = layui.jquery;
+
+    });
+
+</script>
+{/block}

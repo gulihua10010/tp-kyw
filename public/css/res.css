@@ -1,0 +1,116 @@
+.main{
+    background-color: rgb(242,242,242);
+}
+.icon {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+}
+.res-main li{
+    background-color: white;
+    margin-top: 10px;
+    height: 150px;
+
+}
+.res-main{
+   padding-bottom: 50px;
+    width: 860px;
+    float: left;
+}
+.res-main img{
+    width: 120px;
+    height: 120px;
+    margin : 10px;
+}
+.res-main   .res-title{
+    height: 50px;
+    padding: 10px auto;
+
+}
+.res-main   .res-title span{
+    margin-left:30px;
+}
+.res-main   .res-title span{
+    font-size: 30px;
+    color: #666;
+    line-height: 50px;
+}
+
+.res-main  .res-info{
+    margin: 0px 10px;
+    display: block;
+    width: 76%;
+    float: left;
+
+}
+
+.res-main  .res-info div{
+    margin: 10px auto;
+}
+.res-main  .res-info span{
+    line-height: 20px;
+    margin-left: 30px;
+}
+.res-main  .res-info .res-info-data a{
+    margin-left: 20px;
+    background-color: #2ba9f1;
+    height: 35px;
+
+}
+.res-right{
+    float: right;
+    margin-top: 20px;
+    margin-left: 50px;
+    width: 270px;
+    background-color: white;;
+}
+.res-name{
+padding: 20px;
+}
+.res-name img{
+    width: 120px ;
+    height: 120px;
+}
+.res-info-detail{
+    margin: 20px 20px;
+}
+.res-info-detail .res-detail-title{
+    font-size: 25px;
+    color: #666;
+}
+
+.res-info-1 span,.res-info-2 span{
+    font-size: 16px;
+    margin-right: 15px;
+    cursor: pointer;
+}
+.res-info-2{
+    margin-top: 15px;
+}
+.res-desc{
+    width: 860px;
+    padding: 20px;
+}
+.res-desc h4{
+line-height: 30px;
+    padding: 10px;
+    border: 1px #ccc solid;
+    border-left: #3da2f1 6px solid;
+}
+.res-desc .slogBox{
+    margin-top: 10px;
+   margin-left: 5px;
+    margin-bottom: 10px;
+}
+.res-comm{
+    margin-top: 20px;
+    padding: 20px;
+}
+.res-download{
+    color: #1bc7f1;
+}
+ .res-download:hover{
+ color: #2ba9f1;
+}

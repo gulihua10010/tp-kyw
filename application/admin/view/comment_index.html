@@ -1,0 +1,98 @@
+{extend name="base" /}
+{block name="css"}
+  <link rel="stylesheet" href="__ADMIN__/css/form.css">
+{/block}
+{block name="body"}
+<div class="admin-main layui-form">
+<div class="layui-field-box">
+<div class="layui-box-searchber">
+				<button class="layui-btn layui-btn-small" data-url="{:url('admin/comment/alldelete')}"  lay-submit lay-filter="alldelete">删除选中</button>
+</div>
+                <hr>
+  	<table class="layui-table admin-table">
+     	<thead> <tr>
+	    <th width="5%" align="center"><input type="checkbox" name="checkAll" lay-filter="checkAll"></th>
+		<th width="5%" align="center">ID</th>
+        <th width="30%" align="center">评论内容</th>
+        <th width="10%" align="center">评论类别</th>
+		<th width="20%" align="center">所属帖子/文章/课程</th>
+		<th width="10%" align="center">所属会员</th>
+		<th width="10%" align="center">评论时间</th>
+        <th width="10%" align="center">基本操作</th>
+      </tr>	</thead>
+						<tbody id="content">
+						<!--1 bbs 6课程 4视频 7文章 8 资料-->
+      {volist name="tptc" id="vo"}
+	  <tr>
+	    <td align="center"><input type="checkbox" name="ids[{$vo.id}]" lay-filter="checkOne" value="{$vo.id}"></td>
+		<td align="center">{$vo.id}</td>
+        <td style="padding-left: 20px;">
+			{if condition="$vo.type eq 1 "}
+			<a target="_blank" href="{:routerurl('bbs/index/thread',array('id'=>$vo.fid))}"><?php echo mb_substr(strip_tags($vo['content']), 0, 35, 'utf-8');?>...</a></td>
+	  	  {elseif condition="$vo.type eq 6 "/}
+		  <a target="_blank" href="{:routerurl('index/course/detail',array('id'=>$vo.fid))}"><?php echo mb_substr(strip_tags($vo['content']), 0, 35, 'utf-8');?>...</a></td>
+
+		  {elseif condition="$vo.type eq 4 "/}
+		  <a target="_blank" ><?php echo mb_substr(strip_tags($vo['content']), 0, 35, 'utf-8');?>...</a></td>
+
+		  {elseif condition="$vo.type eq 7 "/}
+		  <a target="_blank" href="{:routerurl('index/article/detail',array('id'=>$vo.fid))}"><?php echo mb_substr(strip_tags($vo['content']), 0, 35, 'utf-8');?>...</a></td>
+		  {elseif condition="$vo.type eq 8 "/}
+		  <a target="_blank" href="{:routerurl('index/resource/detail',array('id'=>$vo.fid))}"><?php echo mb_substr(strip_tags($vo['content']), 0, 35, 'utf-8');?>...</a></td>
+
+		  {/if}
+		  <td style="padding-left: 20px;">
+			  {if condition="$vo.type eq 1 "}
+			   帖子</td>
+		  {elseif condition="$vo.type eq 6 "/}
+		 课程</td>
+
+		  {elseif condition="$vo.type eq 4 "/}
+		  课程视频</td>
+
+		  {elseif condition="$vo.type eq 7 "/}
+		 文章 </td>
+		  {elseif condition="$vo.type eq 8 "/}
+		  资料</td>
+
+		  {/if}
+		  <td style="padding-left: 20px;">
+			  {if condition="$vo.type eq 1 "}
+			  <a target="_blank" href="{:routerurl('bbs/index/thread',array('id'=>$vo.fid))}"> {$vo.fid|getforumbyid}</a></td>
+		  {elseif condition="$vo.type eq 6 "/}
+		  <a target="_blank" href="{:routerurl('index/course/detail',array('id'=>$vo.fid))}">{$vo.fid|getcoursebyid} </a></td>
+
+		  {elseif condition="$vo.type eq 4 "/}
+		  <a target="_blank"  >{$vo.fid|getvideobyid} </a></td>
+
+		  {elseif condition="$vo.type eq 7 "/}
+		  <a target="_blank" href="{:routerurl('index/article/detail',array('id'=>$vo.fid))}"> {$vo.fid|getartbyid}</a></td>
+		  {elseif condition="$vo.type eq 8 "/}
+		  <a target="_blank" href="{:routerurl('index/resource/detail',array('id'=>$vo.fid))}"> {$vo.fid|getresbyid}</a></td>
+
+		  {/if}
+		<td align="center"><a target="_blank" href="{:routerurl('user/home',array('id'=>$vo.uid))}">{$vo.username}</a></td>
+		<td align="center">{$vo.time|friendlyDate}</td>
+        <td align="center"> 
+        <a class="elementdel layui-btn layui-btn-danger layui-btn-mini" href="javascript:;" data-id="{$vo.id}" data-url="{:url('admin/comment/delete',array('id'=>$vo['id']))}"   title="删除" >删除</a>
+      
+        </td>
+      </tr>
+      {/volist}
+</tbody>
+					</table>
+				</div>
+		
+			
+		</div>
+ {/block}
+   {block name="page"}
+<div class="btable-paged" >
+<div class="layui-main">
+{$tptc->render()}
+</div>
+</div>
+   {/block}
+    {block name="js"}
+<script type="text/javascript" src="__ADMIN__/js/delelement.js"></script>
+ {/block}

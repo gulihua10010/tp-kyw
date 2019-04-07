@@ -1,0 +1,90 @@
+{extend name="index_base" /}
+{block name="seo"}
+<title>{$site_config['site_title']}|{$site_config['seo_title']}</title>
+
+<meta name="keywords" content="{$site_config['seo_keyword']}">
+<meta name="description" content="{$site_config['seo_description']}">
+{/block}
+{block name="css"}
+<link rel="stylesheet" href="__PUBLIC__css/course.css">
+
+{/block}
+{block name="body"}
+{include file="other/menu"}
+<div class="content-index">
+    <div class="main-mid"  >
+        <ul class="choose-list">
+            <li class="li-bg">
+                <label  >分类：</label>
+                <a href="{:url('index/course/index',['type'=>0])}" name="category" tip="0" {if condition="$le1 eq 0"} class="active"{/if}>全部</a>
+                {volist name="coursetype" id="vo"}
+                <a href="{:url('index/course/index',['type'=>$vo.id])}" name="category" tip="{$vo.id}"  {if condition="$le1 eq $vo.id"} class="active"{/if}>{$vo.name}</a>
+                {/volist}
+            </li>
+            <li class="li-bg" id="zheke" style="">
+                <label >择课：</label>
+                <a href="{:url('index/course/index',['type'=>$le1])}" name="category2" tip="" {if condition="$le2 eq -9"} class="active"{/if}>全部</a>
+                {if condition="$le1 neq 0"}
+                    {volist name="subtype" id="vo"}
+                <a href="{:url('index/course/index',['type'=>$vo.pid.'_'.$vo.id])}" name="category2" tip="{$vo.id}" {if condition="$le2 eq $vo.id"} class="active"{/if}>{$vo.name}</a>
+                    {/volist}
+                {/if}
+
+            </li>
+        </ul>
+    </div>
+
+    <div class="main-bottom" style="margin-top: 30px">
+        <dl class="courseMark">
+            {volist name="courselist" id="vo"}
+            <dd class="clearfix">
+                <div class="courseMark-img fl" onclick="openItem('{:Url(\'index/course/detail\',[\'id\'=>$vo.id])}');" style="cursor:pointer;">
+                    <img src="__ROOT__{$vo.pic}" title="{$vo.name}" alt="{$vo.name}"  >
+                </div>
+                <div class="courseMark-right fl">
+                    <h3 class="courseMark-tit">
+                        <em onclick="openItem('{:Url(\'index/course/detail\',[\'id\'=>$vo.id])}');" style="cursor:pointer;">{$vo.name}</em>
+                    </h3>
+                    <div class="courseMark-intr">
+
+                    </div>
+                    <div class="courseMark-price">
+                        <span class="price greenPrice">免费</span>
+                    </div>
+                    <div class="courseMark-info clearfix">
+                        <div class="fl">
+                            <span>|</span>
+                            学习人数：{$vo.learnperson}人
+                            <span>|</span>
+                            {$vo.classhour}课时
+                            <span>|</span></div>
+                        <div class="fl">
+                            <em style="display: inline-block;width: 200px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">主讲老师：{$vo.teacher}</em></div>
+                    </div>
+
+                    <a href="{:Url('index/course/detail',['id'=>$vo.id])}" target="_blank" class="courseMark-details">查看详情</a>
+                </div>
+            </dd>
+            {/volist}
+
+            <dt>
+                <div class="btable-paged  " >
+
+                            {$courselist->render()}
+                </div>
+            </dt>
+        </dl>
+    </div>
+</div>
+
+
+{/block}
+{block name="js"}
+{/block}
+{block name="script"}
+<script type="text/javascript">
+       function openItem(url){
+           window.open(url);
+       }
+</script>
+{/block}

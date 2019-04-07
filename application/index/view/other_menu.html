@@ -1,0 +1,18 @@
+<div class="nav-box ">
+    <div class="content-index nav-c ">
+        <div class="nav-home fl">
+           <a href="{:url('index/index/index')}">首页</a>
+        </div>
+        <ul class="nav-sub fl  "  >
+            {volist name="infonav" id="vo"}
+            <li><a href="{$vo.link|getnavlink=$vo.sid}" target="{$vo.target}" {php} if($vo['link']!=''&&$controller==getnav_Controller($vo['link'] ,$vo['sid'])) echo ('class="sel-this"');{/php}>{$vo.name}</a>
+                <ul>
+                    {volist name="vo.child" id="vo1"}
+                    <li><a href="{$vo1.link|getnavlink=$vo.sid}" target="{$vo1.target}">{$vo1.name}</a></li>
+                    {/volist}
+                </ul>
+            </li>
+            {/volist}
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,235 @@
+{extend name="index_base" /}
+{block name="seo"}
+<title>{$site_config['site_title']}|{$site_config['seo_title']}</title>
+
+<meta name="keywords" content="{$site_config['seo_keyword']}">
+<meta name="description" content="{$site_config['seo_description']}">
+{/block}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/school.css"/>
+
+{/block}
+{block name="body"}
+{include file="other/menu"}
+
+<div class="wap12    bw" style="padding-bottom: 50px;margin-top: 20px ">
+    <div class="schoolBan"><img src="__ROOT__{$school.pic}" width="1184px" height="243px" alt="{$school.name}">
+    </div>
+    <div class="theSchool clearfix">
+        <div class="fl schoolImg">
+            <img src="__ROOT__{$school.badge}" alt="{$school.name}">
+            <p>{$school.name}</p>
+        </div>
+        <div class="shoolWords">
+            <div class="shoolWordsTop clearfix">
+                <p class="attri fl">
+                    {php}$prop=explode(',',$school['prop']);foreach($prop as $v) echo ("<span>$v</span>"); {/php}
+                </p>
+                <p class="schoolCode fl">院校代码：{$school.code}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wap12 clearfix">
+    <div class="pubLeftBar fl">
+        <div class="pubLinks mb20">
+            <ul class="clearfix">
+                <li class='school-btn on' onclick="brief()"><a name="here"   class="brief">学校简介</a>
+                </li>
+                <li class='school-btn ' onclick="rules()"><a name="here"  class="rules">招生简章</a></li>
+                <li class='school-btn ' onclick="zsmajor()"><a name="here" class="zsmajor">招生专业</a></li>
+                <li class='school-btn ' onclick="cutoffline()"><a name="here" class="cutoffline">分数线</a></li>
+                <li class='school-btn ' onclick="reexam()"><a name="here"  class="reexam">复试</a></li>
+            </ul>
+        </div>
+
+        <div class="recordCon brief-con">
+            <h4 class="schoolTit">{$school.name}研究生院简介</h4>
+            <div class="slogBox">
+                <div class="reexamCon">
+                    {php}if(clearcontent($school['info'])=='')echo ("  <p>暂无简介</p>");{/php}
+                    {$school.info|clearHTMLhead}
+                </div>
+            </div>
+        </div>
+        <div class="recordCon rules-con dn">
+            <h4 class="schoolTit">{$school.name}招生简章</h4>
+            <div class="slogBox">
+                <div class="reexamCon">
+                    {php}if(clearcontent($school['rule'])=='')echo ("  <p>暂无说明</p>");{/php}
+                    {$school.rule|clearHTMLhead}
+                </div>
+            </div>
+        </div>
+        <div class="recordCon zsmajor-con dn">
+            <h4 class="schoolTit">{$school.name}招生专业</h4>
+            <div class="masterBar">
+                <ul class="clearfix masterUl">
+                    <li class="hasBorder on">学术硕士</li>
+                    <li class="">专业硕士</li>
+                </ul>
+                <div class="masterConBox mt20">
+                    <div class="masterCon on">
+                        <div class="subjectCon">
+                            <ul>
+                                {volist name="m1" id="vo"}
+                                <li><span>学院:
+                                <a   target="_blank" title="{$vo.college}">{$vo.college}</a>
+                                </span><span class="master-m">专业:<a href="{:url('index/magor/detail',array('id'=>$vo.id))}" target="_blank" title="{$vo.name}">
+                                    {$vo.name}</a></span> </li>
+                                {/volist}
+                            </ul>
+
+                        </div>
+                      </div>
+                       <div class="masterCon">
+                            <div class="subjectCon">
+                                <ul>
+                                    {volist name="m2" id="vo"}
+                                    <li><span>学院:
+                                <a   target="_blank" title="{$vo.college}">{$vo.college}</a>
+                                </span><span class="master-m">专业:<a href="{:url('index/magor/detail',array('id'=>$vo.id))}" target="_blank" title="{$vo.name}">
+                                    {$vo.name}</a></span> </li>
+                                    {/volist}
+                                </ul>
+                            </div>
+
+                       </div><!--masterConBox-->
+                    </div><!--masterBar-->
+                </div>
+            </div>
+        <div class="recordCon cutoffline-con dn">
+            <h4 class="schoolTit">{$school.name}分数线</h4>
+            <div class="slogBox">
+                <div class="reexamCon">
+                    {php}if(clearcontent($school['grade'])=='')echo ("  <p>暂无说明</p>");{/php}
+                    {$school.grade|clearHTMLhead}
+                </div>
+            </div>
+        </div>
+        <div class="recordCon reexam-con dn">
+            <h4 class="schoolTit">{$school.name}复试信息</h4>
+            <div class="slogBox">
+                <div class="reexamCon">
+                    {php}if(clearcontent($school['fushi'])=='')echo ("  <p>暂无说明</p>");{/php}
+                    {$school.fushi|clearHTMLhead}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pubRightBar fr">
+        <div class="pubRight">
+            <div class="concatCon">
+                <p class="pubWeb" title="{$school.website}"><strong>研究生院网址：</strong>{$school.website} </p>
+                <p title="{$school.tel}"><strong>联系电话：</strong>{$school.tel}</p>
+                <p title="{$school.email}"><strong>联系邮箱：</strong>{$school.email}</p>
+                <p title="{$school.address}"><strong>学校地址：</strong>{$school.address}</p>
+            </div>
+        </div>
+
+
+        <div class="pubSchoolHot mt15">
+            <h4 class="pubRightTit"><span>同类型院校人气排名</span></h4>
+            <ul class="hotSchoolList">
+                {foreach  name="right_s" item="vo"  key="k"}
+                <li class="num{$k+1} noBor"><a href="{:url('index/school/detail',array('id'=>$vo.id,'t'=>'1'))} "
+                                          target="_blank">{$vo.name}</a>
+                </li>
+                {/foreach}
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+{/block}
+{block name="js"}
+{/block}
+{block name="script"}
+<script type="text/javascript">
+    '{if condition="$t eq 1"}'
+    brief()
+    '{/if}'
+
+    '{if condition="$t eq 2"}'
+    rules();
+    '{/if}'
+    '{if condition="$t eq 3"}'
+    zsmajor();
+    '{/if}'
+    '{if condition="$t eq 4"}'
+    cutoffline();
+    '{/if}'
+    '{if condition="$t eq 5"}'
+    reexam();
+    '{/if}'
+    function brief(){
+        $('.school-btn').removeClass('on');
+        $('.brief').parent().addClass('on');
+        $('.brief-con').show();
+        $('.rules-con').hide();
+        $('.zsmajor-con').hide();
+        $('.cutoffline-con').hide();
+        $('.reexam-con').hide();
+
+    }
+    function rules(){
+        $('.school-btn').removeClass('on');
+        $('.rules').parent().addClass('on');
+        $('.brief-con').hide();
+        $('.rules-con').show();
+        $('.zsmajor-con').hide();
+        $('.cutoffline-con').hide();;
+        $('.reexam-con').hide();
+
+    }
+    function zsmajor(){
+
+        $('.school-btn').removeClass('on');
+        $('.zsmajor').parent().addClass('on');
+        $('.brief-con').hide();
+        $('.rules-con').hide();
+        $('.zsmajor-con').show();
+        $('.cutoffline-con').hide();
+        $('.reexam-con').hide();
+    }
+    function cutoffline(){
+
+        $('.school-btn').removeClass('on');
+        $('.cutoffline').parent().addClass('on');
+        $('.brief-con').hide()
+        $('.rules-con').hide();
+        $('.zsmajor-con').hide();
+        $('.cutoffline-con').show();
+        $('.reexam-con').hide()
+    }
+    function reexam(){
+        $('.school-btn').removeClass('on');
+        $('.reexam').parent().addClass('on');
+        $('.brief-con').hide()
+        $('.rules-con').hide()
+        $('.zsmajor-con').hide()
+        $('.cutoffline-con').hide()
+        $('.reexam-con').show()
+    }
+
+
+
+    //masterUl
+
+$('.masterUl li:first-child').click(function () {
+    $('.masterUl li').removeClass('on');
+    $(this).addClass('on');
+    $('.masterConBox .masterCon:first-child').show()
+    $('.masterConBox .masterCon:nth-child(2)').hide()
+
+})
+    $('.masterUl li:nth-child(2)').click(function () {
+        $('.masterUl li').removeClass('on');
+        $(this).addClass('on');
+        $('.masterConBox .masterCon:first-child').hide()
+        $('.masterConBox .masterCon:nth-child(2)').show()
+
+    })
+</script>
+{/block}

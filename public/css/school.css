@@ -1,0 +1,228 @@
+.main{
+    background-color: rgb(242,242,242);
+}
+.side_L_x{ width: 900px;}
+.tab_title_Shx{width: 898px; border: 1px solid #f1f1f1; border-top: 0; clear:both;  overflow: hidden; background-color: white}
+.classify_ZY_x{padding-bottom: 20px;}
+.Colleges_L_x{width: 41px; height: 23px;}
+.Colleges_L_x a{ display: block; width: 41px; height: 23px;}
+.Colleges_R_x{width: 755px; font-size: 0;}
+.Colleges_R_x a{display: inline-block; height: 23px; line-height: 23px;width: 48px;text-align:center; color: #4e4e4e; margin-right: 3px; margin-bottom: 5px; font-size: 12px;}
+.Colleges_R_x a.on,.Colleges_R_x a:hover{position: relative; background-color: #3da2f1; color: #fff;}
+.classify_RTop_x .w95{width: 95px;}
+.classify_RTop_x .w84{width: 84px;}
+.classify_ZY_x{padding-bottom: 20px;}
+.classify_L_x{ width: 100px;height: 23px;line-height: 23px; font-size: 12px; color: #4e4e4e; font-weight: bold; text-align: right;   }
+.classify_RTop_x{ width: 798px; font-size: 12px; color: #4e4e4e; ;}
+.classify_RTop_x a{display: inline-block; height: 23px; line-height: 23px;text-align:center; color: #4e4e4e; margin-right: 3px;}
+.classify_RTop_x a.on{position: relative; background: #2ba9f1; color: #fff;}
+.classify_RTop_x a.on em{display: block;width: 8px; height: 4px; position: absolute; left: 50%; margin-left: -4px; bottom: -4px;background: url(../images/bg_sj_x.png) no-repeat;}
+
+.serSchoolBar{width: 231px;margin-left:98px;position: relative}
+.serSchoolIpt{width: 231px;height: 27px;border-radius: 4px;border: 1px solid #d8d8d8;text-indent: 15px;font-size: 12px;color: #484848;}
+.serSchoolBtn{display: block;width: 23px;height: 23px;background: url(../images/ser1.jpg) no-repeat center;position: absolute;right: 1px;top:3px;}
+
+.rq_px_x{padding: 16px 20px 0 18px; border-top: 1px solid #f1f1f1;}
+.rq_top_x{height: 18px;}
+.rq_top_x a{display: inline-block; width: 80px; height: 18px;background: #eeeeee; color: #878787; line-height: 18px; text-indent: 4px; border-radius: 3px; margin-right: 6px;}
+.rq_top_x a.on{background: #2ba9f1; color: #fff;}
+.rq_top_x a em{display: inline-block;width: 9px; height: 9px; background: url(../images/img_jtx_x.png) no-repeat; vertical-align: middle;}
+.rq_top_x a.on em{display: inline-block;width: 9px; height: 9px;background: url(../images/img_jtx_x2.png) no-repeat;}
+
+.information_x{padding-top: 16px; width: 100%; vertical-align: top;}
+.information_x li{ width: 100%; height: 208px; border: 1px solid #e9e8e8; }
+.information_x li:hover{ background: #f9f9f9; transition: 1s;}
+.information_L_x{height: 208px; width: 169px;  }
+.information_L_x img{display: block; width: 138px; height: 138px; margin: 12px 0 0 12px;}
+.information_L_x p{ line-height: 40px; font-size: 18px; color: #000000; text-align: center;}
+.information_R_x{ padding-top: 26px;}
+.information_R_Topx{background: #fff;border-radius: 3px;display: inline-block; padding-left: 5px;}
+.information_R_Topx span{ cursor: pointer; display: inline-block; padding: 0 15px;height: 30px; margin-left: -5px; line-height: 30px; color: #7e7e7e; border: 1px solid #dedede;}
+.information_R_Topx .bL{border-left: 1px solid #dedede;}
+
+.information_R_Topx .brn{border-right: 0;}
+.information_R_Titlex{margin-top: 19px; margin-bottom: 15px; color: #e2e2e2;}
+.information_R_Titlex span{display: inline-block; margin: 0 16px 0 14px; color: #000000;}
+.information_R_Contx{border: 1px solid #dedede; background: #fff; border-radius: 3px; margin-bottom: 14px;}
+.information_R_Contx a{ display: inline-block; padding: 0 15px;height: 30px; line-height: 30px; color: #878787; }
+.information_R_Btmx{height: 30px;}
+.information_R_Btmx a{display: inline-block; width: 99px; height: 28px; line-height: 28px; color: #878787; border: 1px solid #eeeeee;  text-align: center; border-radius: 3px; margin-right: 14px;}
+.information_R_Btmx a:hover{ border-color: rgb(23,179,241); color: rgb(23,179,241);}
+
+.recordPage{text-align: center;padding: 20px 0}
+.recordPage a{cursor: pointer;text-align: center;display: inline-block;_display:inline;border-radius: 4px;color: #4b4b4b;border: 1px solid #fff;padding: 0px 5px}
+.recordPage a:hover{background: #eee;color: #4b4b4b;border: 1px solid #dbdbdb;}
+.recordPage span{background: #eee;color: #4b4b4b; display:inline-block;border: 1px solid #dbdbdb;border-radius: 4px;padding: 0px 5px }
+
+.side_R_x{ width: 285px; margin-top:  0px ;background-color: white;padding: 20px  -10px  }
+.side_R_x ul{
+
+}
+.side_R_x span{
+
+    color: #2ba9f1;
+    font-size: 18px;
+}
+.side_R_x ul li{
+    margin: 5px auto;
+    color: #0C0C0C;
+    cursor: pointer;
+}
+
+/*//detail*/
+
+.schoolBan{padding: 8px;  overflow: hidden;}
+.schoolBan img{display: block}
+
+.theSchool{position: relative;width: 100%}
+
+.schoolImg{width: 138px;text-align: center;margin:0 30px;position: absolute;left: 0px;top:-80px;}
+.schoolImg p{font-size: 20px}
+.schoolImg p{font-size: 20px}
+.shoolWords{padding:20px 0 0 185px;}
+.shoolWords p{height: 28px;line-height: 28px;border-radius: 4px}
+.attri{border: 1px solid #dbdbdb;margin-right: 15px}
+.attri span{display: inline-block;padding: 0 15px;margin-left: -1px;border-left: 1px solid #dbdbdb;color: #7e7e7e}
+.schoolCode{display: inline-block;padding: 0 15px;border: 1px solid #dbdbdb;background: #f2f1f1;color: #3d3d3d;margin-right: 15px}
+.schoolLinks{width: 101px;text-indent: 40px}
+.schoolLinks a{color: #fff;}
+.shoolWords .ratio{background:url(../images/school_13.png) no-repeat 15px center #2ba9f1;}
+.shoolWords .ratio:hover{background:url(../images/school_13.png) no-repeat 15px center  #2ba9f1}
+.shoolWords .test{background:url(../images/school_10.png) no-repeat 15px center #2ba9f1;}
+.shoolWords .test:hover{background:url(../images/school_10.png) no-repeat 15px center #2ba9f1;}
+
+
+/*the publinks*/
+.pubLinks{margin-top: 30px}
+.pubLinks li{float: left;width: 136px;text-align: center; border: 1px solid #f1f1f1;height: 136px;margin-right: -1px;}
+.pubLinks li a{background:url(../images/img.png) no-repeat #f9f9f9;display:block;height: 56px;width: 136px;padding-top: 80px;font-size: 18px;color: #4f4f4f;transition:background-color .6s;}
+.pubLinks li a:hover{background-color:#2ba9f1 }
+
+.pubLinks li.on a{color: #fff;background:url(../images/img.png) no-repeat #2ba9f1;}
+.pubLinks li a.brief{background-position: -245px -195px}
+.pubLinks li.on a.brief{background-position: -35px -195px}
+.pubLinks li a.rules{background-position: -245px -375px}
+.pubLinks li.on a.rules{background-position: -35px -375px}
+.pubLinks li a.zsmajor{background-position: -245px -555px}
+.pubLinks li.on a.zsmajor{background-position: -35px -555px}
+.pubLinks li a.cutoffline{background-position: -245px -915px}
+.pubLinks li.on a.cutoffline{background-position: -35px -915px}
+.pubLinks li a.reexam{background-position: -245px -1275px}
+.pubLinks li.on a.reexam{background-position: -35px -1275px}
+
+
+.pubLeftBar{width: 897px;border: 1px solid #efefef;position: relative}
+.pubRightBar{width: 285px;;border: 1px solid #efefef;margin-top: 30px}
+
+
+.recordSear{padding: 20px 0;border: 0;box-shadow: none;}
+.recordCon{padding: 26px 19px;background-color: white}
+.recordTable th,.recordTable td{height: 40px;line-height: 40px}
+.recordTable th{border: 1px solid #2ba9f1;background: rgb(23,179,241);color: #0C0C0C;font-weight: 100}
+.recordTable td{border: 1px solid #efefef;text-align: center;}
+.recordTable td a{color: #1BC7F1;text-decoration: underline;}
+
+
+.theYellowArea{color: #ff8015;height: 40px;line-height: 40px;background:url(../images/school_21.jpg) no-repeat 8px center  #fefea8;border: 1px solid #ff8015;text-indent: 40px;margin-bottom: 20px}
+.theYellowArea a{color:#ff8015 }
+.schoolTit{height: 45px;line-height: 45px;border: 1px solid #e4e4e4;border-left: 5px solid rgb(23,179,241);font-size: 14px;text-indent: 13px;margin-bottom: 25px}
+.schoolTit2{margin-bottom: 0px}
+.schoolLeftCon{padding: 20px}
+
+
+.reexamCon,.reexamConAdd{line-height: 25px;overflow: hidden;margin-bottom: 30px;padding-bottom: 20px}
+.reexamCon p{line-height: 25px;}
+.reexamHotList{overflow: hidden;padding-top: 20px}
+.reexamHotList li{display: inline-block;padding: 0 10px;line-height: 25px;}
+.reexamHotList li a{color: #3b3b3b}
+.reexamHotList li a:hover{text-decoration: underline;color: rgb(23,179,241)}
+
+
+.concatCon{width: 285px;background: url(../images/school_19.jpg) no-repeat right top #fafafa;padding: 20px 0 10px;border-bottom: 2px solid #2ba9f1}
+.concatCon p{text-indent: 42px;color: #868686;line-height: 30px;width: 280px;text-overflow:ellipsis;white-space: nowrap;overflow: hidden;}
+.concatCon p.pubWeb{text-indent: 20px;}
+.concatCon p strong{font-weight: 100;color: #000}
+
+.pubSchoolHot{border: 1px solid #ededed;background: #fff }
+
+.masterUl{width: 859px;border: 1px solid #dedede;border-radius: 4px;height: 55px;line-height: 55px}
+.masterUl li{float: left;width: 429px;text-align: center;cursor: pointer;font-size: 20px;color: #bababa;transition:all .3s}
+.masterUl li.on{background: #3DA2F1;color: #fff}
+.masterUl li.hasBorder{border-right: 1px solid #dedede;}
+.masterConBox div.masterCon{display: none;width: 100%;}
+.masterConBox div.on{display: block}
+.subjectTit{border: 1px solid #ddd;width: 859px;height: 45px;line-height: 45px;}
+.subjectTit span{display: block;width: 804px;float: left;font-size: 14px;text-indent: 15px}
+.subjectCon{margin-bottom: 24px} .subHiddTit .subjectHiddCon strong{color: rgb(23,179,241); display: block;}
+.subHiddTit .subjectHiddCon span{display: inline-block;padding-right: 5px}
+.subHiddTit .subjectHiddCon a.toDetail{width: 119px;height: 30px;background: rgb(23,179,241);color: #fff;text-align: center;margin: 10px auto 0;display: block;line-height: 30px;border-radius: 4px}
+.subHiddTit .subjectHiddCon a.toDetail:hover{background: #2ba9f1}
+.subjectCon ul li{
+border: 1px #ddd solid;
+    padding: 10px ;
+    margin-top: 5px;
+}
+.subjectCon ul li span{
+    margin-left: 10px;
+}
+.subjectCon ul li   a{
+color: #1bc7f1;
+
+}
+
+/*magor*/
+#rp_tab_x{border-collapse: collapse; border: 1px solid #efefef;}
+#rp_tab_x tbody td{border: 1px solid #efefef;  text-align: center;}
+#rp_tab_x thead td{background: rgb(23,179,241); border: 1px solid #2ba9f1;text-align: center;  color: #fff; font-weight:bold;}
+
+.themagor{
+height: 150px;
+    background:url(../images/magor_bcg.png) no-repeat white;
+    background-position:  120px 25px;
+
+}
+.magor-name{
+width: 150px;
+  text-align: center;
+    color: #fff;
+    background:url(../images/img.png) no-repeat #fff;
+    background-position: -35px -560px
+}
+.magor-name span{
+    font-size: 28px;
+    color: #1bc7f1;
+    display: inline-block;
+    margin-top: 60px;
+}
+.magorWords{
+margin-left: 270px;
+    margin-top: -20px;
+}
+.magorWords .magorWordsTop1{
+margin: 10px auto;
+}
+.magor-type{
+    margin-top: 20px;
+    margin-left: -20px;
+    width: 80px;
+    height: 30px;
+    display: inline-block;
+    border-radius: 50px;
+    text-align: center;
+    line-height: 30px;
+    background-color: #12ffe7;
+    color: white;
+    position: relative;
+}
+.magor-type:before{
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 0;
+    right: 95%;
+    top: 8px;
+    border-top: 5px solid transparent;
+    border-right: 18px solid #12ffe7;
+    border-bottom: 5px solid transparent;
+
+}

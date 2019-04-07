@@ -1,0 +1,71 @@
+{extend name="index_base" /}
+{block name="seo"}
+<title>{$site_config['site_title']}|{$site_config['seo_title']}</title>
+
+<meta name="keywords" content="{$site_config['seo_keyword']}">
+<meta name="description" content="{$site_config['seo_description']}">
+{/block}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/school.css"/>
+
+{/block}
+{block name="body"}
+{include file="other/menu"}
+
+<div class="wap12 mt20 bw " style="margin-top: 20px" >
+    <div class=" themagor clearfix    ">
+        <div class="fl  magor-name  ">
+            <span>{$magor.name}</span>
+        </div>
+        <span class="magor-type">{if condition="$magor.type eq 1"}学术硕士{else/}专业硕士{/if}</span>
+        <div class=" magorWords">
+            <div class="magorWordsTop fl ">
+                <p class="schoolCode ">专业代码：{$magor.code}</p>
+            </div>
+            <div class="magorWordsTop1 ">
+                <p class="schoolCode ">所属门类：{$magor.pname}</p>
+            </div>
+            <div class="magorWordsTop2  fl">
+                <p class="schoolCode ">所属学科：{$magor.sub}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wap12 clearfix  " style="margin-top: 20px">
+    <div class="pubLeftBar fl">
+
+        <div class="recordCon brief-con">
+            <h4 class="schoolTit">{$magor.name}简介</h4>
+            <div class="slogBox">
+                <div class="reexamCon">
+                    {php}if(clearcontent($magor['info'])=='')echo ("  <p>暂无简介</p>");{/php}
+                    {$magor.info|clearHTMLhead}
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="pubRightBar fr" style="margin-top:  0">
+        <div class="pubSchoolHot ">
+            <h4 class="pubRightTit"><span>同类型院校人气排名</span></h4>
+            <ul class="hotSchoolList">
+                {foreach  name="right_s" item="vo"  key="k"}
+                <li class="num{$k+1} noBor"><a href="{:url('index/magor/detail',array('id'=>$vo.id))} "
+                                          target="_blank">{$vo.name}</a>
+                </li>
+                {/foreach}
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+{/block}
+{block name="js"}
+{/block}
+{block name="script"}
+<script type="text/javascript">
+
+
+</script>
+{/block}

@@ -1,0 +1,72 @@
+{volist name="asks" id="vo"}
+<div class="wenda-listcon mod-qa-list clearfix">
+    <div class='{if condition="$vo.issolve == 1"}icon-finish{else/}icon-wenda{/if}'></div>
+    <div class="headslider qa-medias l"><a href="{:url('user/index/home',array('id'=>$vo.userid))}"
+                                           class="media" target="_blank"
+                                           title="{$vo.username}"><img
+            src="__ROOT__{$vo.userhead}"
+            width="40" height="40"></a></div>
+    <div class="wendaslider qa-content">
+        <h2 class="wendaquetitle qa-header" style="cursor: pointer;!important;">
+            <div class="wendatitlecon qa-header-cnt  " ><a style=" cursor: pointer"
+                                                           href="{:url('index/course/qadetail',array('aid'=>$vo.id))}" target="_blank"
+                                                           class="qa-tit "> {$vo.title} </a></div>
+        </h2>
+        <div class="replycont qa-body clearfix">
+            {if condition="$vo.solve neq ''"}
+            <div class="fl replydes best"><span class="replysign"><span
+                    class="adopt" style="color: #0ae029">已采纳回答</span> / <a
+                    href="{:url('user/index/home',array('id'=>$vo.solve.userid))}" target="_blank"
+                    title="{$vo.solve.username}" class="nickname"  style="color: #666;font-weight: bold;font-size: 16px">{$vo.solve.username}</a></span>
+                <div class="replydet">{$vo.solve.content|clearHTMLhead}</div>
+            </div>
+            {elseif condition="$vo.new neq ''" /}
+            <div class="fl replydes best"><span class="replysign"><span
+                    class="adopt">最新回答</span> / <a
+                    href="{:url('user/index/home',array('id'=>$vo.new.userid))}" target="_blank"
+                    title="{$vo.new.username}" class="nickname" style="color: #666;font-weight: bold;font-size: 16px">{$vo.new.username}</a></span>
+                <div class="replydet">{$vo.new.content|clearHTMLhead}</div>
+            </div>
+            {else/}
+            <div class="fl replydes best"><span class="replysign"><span
+                    class="adopt">暂无回答</span>  </span>
+                <div class="replydet"><a  target="_blank" style="color: white" href="{:url('index/course/qadetail',array('aid'=>$vo.id))}" class="layui-btn">我要发布</a></div>
+            </div>
+            {/if}
+        </div>
+        <div class="replymegfooter qa-footer clearfix">
+            <div class="l-box fl"><a href="{:url('index/course/qadetail',array('aid'=>$vo.id))}"
+                                     target="_blank" class="replynumber static-count "> <span
+                    class="static-item answer">    {$vo.reply} 回答   </span>
+                <span class="static-item">           </span>
+            </a></div>
+            <em class="r">{$vo.time|friendlyDate}</em> </div>
+    </div>
+</div>
+{/volist}
+
+<div class="ask-page">
+{$apage}
+</div>
+<script>
+    layui.use(['layer', 'form', 'element' ], function () {
+
+        var   jq = layui.jquery
+            , layer = layui.layer
+            , form = layui.form;
+        jq(".ask-page .pagination a").click(function(){
+            var url = jq(this).attr('href');
+            jq.ajax({
+                'type' : 'post',
+                'url'  :  url,
+                'data':{'type':1,'vid':'{$vid}'},
+                success:function(data){
+                    jq('.course_quescon').html(data);
+                }
+            })
+            return false;
+        });
+  });
+
+
+</script>

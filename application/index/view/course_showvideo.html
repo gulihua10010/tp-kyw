@@ -1,0 +1,577 @@
+{extend name="index_base" /}
+{block name="seo"}
+<title>{$site_config['site_title']}|{$site_config['seo_title']}</title>
+
+<meta name="keywords" content="{$site_config['seo_keyword']}">
+<meta name="description" content="{$site_config['seo_description']}">
+{/block}
+
+{block name="css"}
+<link rel="stylesheet" href="__PUBLIC__/css/course.css">
+<link rel="stylesheet" href="__PUBLIC__/css/aliplayer-min.css" />
+{/block}
+{block name="body"}
+{include file="other/menu"}
+<style>
+    .prism-player .prism-cover{
+        display:block;
+    }
+
+    .prism-player .prism-marker-text{
+        display:none;
+    }
+
+    img{
+        max-width: 350px;
+    }
+</style>
+<div class="video-main">
+    <div class="navs" style="line-height: 56px;min-width: 1200px;background-color: #333">
+        <a href="{:Url('index/course/detail',['id'=>$cid])}">
+            <div style="float:left;width: 66px" id="fanhui"><span style="margin-left: 30px;color: #999ea2" ><i class="iconfont">&#xe61c;</i> </span></div>
+        </a>
+        <span style="margin-left: 20px;color: #999ea2;">{$video.name}</span>
+    </div>
+    <div id="player-con" style="width: 100%; min-height: 600px;  background-color: black; height: 640px;"  class="prism-player">
+    </div><input type="hidden"  id="videoplay" value="0">
+    <div id="sideBar">
+        <div id="sideBarTab"><img src="__PUBLIC__images/zhangjie.png" alt="sideBar" title="sideBar"></div>
+        <div id="sideBarContents" style="display:none">
+            <div id="sideBarContentsInner">
+                {volist name="video_collects" id="vo"}
+                <h2>{$vo.name}</h2>
+                <ul>
+                    {volist name="vo.sub" id="sub"}
+                    <li>
+                        <a class="tiaozhuan2"  style='font-size:13px; {if condition="$sub.id eq $vid"}color: yellow{/if} ' href="{:Url('index/course/showvideo',array('vid'=>$sub.id,'cid'=>$cid))}">
+                            {$sub.name}
+                        </a>
+                        <div class="clear"></div>
+                    </li>
+                    {/volist}
+                </ul>
+                {/volist}
+
+            </div>
+        </div>
+    </div>
+    <div class="video-x  ">
+        <div class="fl " style="width: 860px">
+    <div class="page-container">
+        <div class="line-content" style="height: 100px;padding-top: 50px;">
+            <a href="javascript:void(0)"  class="ask-click">
+                <div id="asks" style="font-size: 18px;font-weight: bold;float: left;color: red;">问答</div>
+            </a>
+            <a href="javascript:void(0)"   class="comm-click" >
+                <div id="comms"
+                     style="font-size: 18px; font-weight: bold; float: left; margin-left: 60px; color: rgb(78, 85, 93);">评论
+                </div>
+            </a>
+            <a href="javascript:void(0)"   class="note-click" >
+                <div id="notes"
+                     style="font-size: 18px; font-weight: bold; float: left; margin-left: 60px; color: rgb(78, 85, 93);">同学笔记
+                </div>
+            </a>
+            <div class="clear"></div>
+            <hr class="titlehr" style="width: 805px;float: left;margin-top: 30px;">
+        </div>
+    </div>
+    <div class="page-container     "  id="asks-block">
+        <div class="line-content   ">
+            <div class="contentyangshi  "  >
+                <div class="js-tab-item tab-item c-qalist current" data-type="qa" style="display: block;">
+                    <div class="comp-filter-bar clearfix">
+                        <span class="js-pub-btn moco-btn moco-btn-gray-l ask-answer">提问题</span>
+                    </div>
+                    <div id="qaContainer" class="answertabcon">
+                        <div class="course_quescon mod-post">
+                            {include file="course_ajaxpage_asks" /}
+
+                        </div>
+                    </div>
+                    <!--<div class="paginationwrap">-->
+                    <!--<div class="pagination"><span class="current prev disabled">首页</span><span-->
+                    <!--class="current prevclass prev">上一页</span><span class="current p_interval">1</span><a-->
+                    <!--href="javascript:;" class="p_interval">2</a><a href="javascript:;"-->
+                    <!--class="nextclass next">下一页</a><a-->
+                    <!--href="javascript:;" class="prev disabled lastclass">尾页</a></div>-->
+                    <!--</div>-->
+                </div>
+                <div class="clear"></div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="page-container" id="comms-block" style="display: none;">
+        <div class="line-content">
+            <div class="contentyangshi"  >
+                <div class="js-tab-item tab-item c-comment" data-type="comment"  >
+                    <div class="comp-filter-bar clearfix">
+                        <span class="js-pub-btn moco-btn moco-btn-gray-l push-comm">发布评论</span>
+                    </div>
+                    <div id="commentContainer" class="answertabcon">
+                        <div class="course_comment mod-post">
+                            {include file="course_ajaxpage_comms" /}
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="page-container" id="notes-block"  style="display: none;">
+        <div class="line-content">
+            <div class="contentyangshi" >
+                <div class="js-tab-item tab-item c-comment" data-type="comment"  >
+                    <div class="comp-filter-bar clearfix">
+                        <span class="js-pub-btn moco-btn moco-btn-gray-l write-note">记笔记</span>
+                    </div>
+                    <div id="noteContainer" class="answertabcon">
+                        <div class="course_note mod-post">
+                            {include file="course_ajaxpage_notes" /}
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+   </div>
+
+    <div style="float: right;width: 300px;margin-top: 150px;  background-color: white;" >
+        <span style="margin-left: 35px;"><i class="iconfont" style="color: red">&#xe6a5;</i> </span>
+        <span style="font-size: 16px;font-weight: bold;margin-left: 5px;">课程推荐</span> 
+        <ul class="hotSchoolList">
+            {foreach  name="right_tj" item="vo"  key="k"}
+            <li class="num{$k+1} noBor"><a href="{:url('index/school/detail',array('id'=>$vo.id,'t'=>'1'))} "
+                                           target="_blank">{$vo.name}</a>
+            </li>
+            {/foreach}
+        </ul>
+    </div>
+
+    <div class="clear"></div>
+
+    <div style="opacity:0; width: 350px;height: 200px;position: absolute;top:  1611px;right:  0px;  ">
+        <div class="imgs" > </div>
+    </div>
+
+ </div>
+{/block}
+{block name="js"}
+<script type="text/javascript" src="__PUBLIC__/plugins/tinymce/tinymce.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/prototype.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/side-bar.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/effects.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/date.format.js"></script>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/js/aliplayer-min.js">
+</script><script type="text/javascript" src="__PUBLIC__js/clipboard.min.js"></script>
+
+{/block}
+{block name="script"}
+<script>
+    layui.use(['layer', 'form', 'element','rate' ], function () {
+
+        var rate = layui.rate
+            , jq = layui.jquery
+            , layer = layui.layer
+            , form = layui.form;
+        var w = jq(window).height()
+        var h = jq(window).width()
+        var g_startPage = 1;
+
+        '{if condition="$islogin==0"}';
+        showLogin(jq);
+        '{/if}'
+        var player = new Aliplayer({
+                "id": "player-con",
+                "source": "__ROOT__{$video.video}",
+                "width": "100%",
+                "height": "500px",
+                "autoplay": true,
+                "isLive": false,
+                "rePlay": true,
+                "playsinline": true,
+                "preload": true,
+                "autoPlayDelayDisplayText": "正在加载中..请稍等",
+                "language": "zh-cn",
+                "controlBarVisibility": "hover",
+                "videoWidth": "100%",
+                "useH5Prism": true,
+                "extraInfo": {
+                    "crossOrigin": "anonymous"
+                },
+                "skinLayout": [{"name": "bigPlayButton", "align": "blabs", "x": 30, "y": 80},
+                    {"name": "H5Loading", "align": "cc"},
+                    {"name": "errorDisplay", "align": "tlabs", "x": 0, "y": 0},
+                    {"name": "infoDisplay"},
+                    {"name": "tooltip", "align": "blabs", "x": 0, "y": 56},
+                    {"name": "thumbnail"},
+                    {
+                        "name": "controlBar", "align": "blabs", "x": 0, "y": 0,
+                        "children": [{"name": "progress", "align": "blabs", "x": 0, "y": 44},
+                            {"name": "playButton", "align": "tl", "x": 15, "y": 12},
+                            {"name": "timeDisplay", "align": "tl", "x": 10, "y": 7},
+                            {"name": "fullScreenButton", "align": "tr", "x": 10, "y": 12},
+                            {"name": "subtitle", "align": "tr", "x": 15, "y": 12},
+                            {"name": "setting", "align": "tr", "x": 15, "y": 12},
+                            {"name": "volume", "align": "tr", "x": 5, "y": 10},
+                            {"name": "snapshot", "align": "tr", "x": 10, "y": 12}
+                        ]
+                    }
+                ]
+            }, function (player) {
+                console.log("播放器创建了。");
+            }
+        );
+        /* h5截图按钮, 截图成功回调 */
+        player.on('snapshoted', function (data) {
+            var pictureData = data.paramData.base64
+            var downloadElement = document.createElement('img');
+            var img_p=jq(downloadElement);
+            img_p.addClass('pimg');
+            downloadElement.setAttribute('src', pictureData)
+            var fileName = 'Aliplayer' + Date.now() + '.png'
+            jq('.imgs').html( img_p)
+            // downloadElement.setAttribute('download', fileName)
+            // downloadElement.click()
+            pictureData = null
+            var clipboard = new ClipboardJS('.prism-snapshot-btn', {
+                target: function() {
+                    layer.msg('截图成功！请在编辑器中粘贴', {icon: 1, time: 1000}, function () {
+                    });
+                    return document.querySelector('.imgs');
+                }
+            });
+        })
+
+        var timeToSaved='{$dcvr.progress}';
+        timeToSaved=timeToSaved==''?0:parseInt(timeToSaved);
+        if (timeToSaved==null||timeToSaved==''||timeToSaved==NaN){
+            timeToSaved=0;
+        }
+        player.play();
+        player.seek(timeToSaved);
+        function cancelSpace(e) {
+            var e = e || window.event;
+            var elm = e.srcElement || e.target;
+            var key = e.keyCode || e.charCode;
+            if (key == 32) {
+                if (elm.tagName.toLowerCase() == "input" && elm.type.toLowerCase() == "text" || elm.tagName.toLowerCase() == "textarea") {
+                    return;
+                }
+                if (window.event) {
+                    e.returnValue = false;
+                }
+                else {
+                    e.preventDefault();
+                }
+            }
+        }
+        document.onkeypress = cancelSpace;
+        jq(document).keydown(function (e) {
+            keyNum = e.keyCode;
+            //空格暂停播放
+            if (keyNum == '32') {
+                var videoplay = jq('#videoplay').val();
+                if (videoplay == 0) {
+                    player.pause();
+                    jq('#videoplay').val(1);
+                } else {
+                    player.play();
+                    jq('#videoplay').val(0);
+                }
+            } else if (keyNum == '37') {
+                var videotimes = player.getDuration();
+                var playnum = player.getCurrentTime();
+                playnum = parseInt(playnum - 10);
+                if (playnum <= (videotimes - 30)) {
+                    player.seek(playnum);
+                }
+            } else if (keyNum == '39') {
+                var videotimes = player.getDuration();
+                var playnum = player.getCurrentTime();
+                playnum = parseInt(playnum + 10);
+                if (playnum <= (videotimes + 30)) {
+                    player.seek(playnum);
+                }
+
+            }
+        })
+        // 监听播放器的pause事件
+        player.on("pause", function () {
+            var timeToSaved= player.getCurrentTime();
+            saveWatchTime(timeToSaved);
+        });
+
+        player.on("ended", function () {
+            var timeToSaved= player.getCurrentTime();
+            saveWatchTime(timeToSaved);
+        });
+
+
+        // //存储观看时间的函数
+        function saveWatchTime(timeToSaved) {
+            jq.ajax({
+                type: "post",
+                url: "{:Url('index/course/saveWatchTime',['id'=>$cid])}",
+                data: {"vid": '{$vid}', "seconds": timeToSaved, "uid": '{$Think.session.userid}'},
+                dataType: 'json',
+                success: function (ret) {
+                    if (ret.code == "200") {
+                        timeToSaved = 0;
+                    }
+                }
+            });
+        }
+
+        // //关闭页面时做的处理，将观看时间存到数据库中
+        window.onbeforeunload = onbeforeunload_handler;
+
+        function onbeforeunload_handler() {
+            timeToSaved= player.getCurrentTime();
+            saveWatchTime(timeToSaved);
+        }
+
+
+        jq('.ask-click').click(function () {
+            jq("#comms-block").hide();
+            jq("#notes-block").hide();
+            jq("#asks-block").show();
+            jq("#asks").css({color: "red"})
+            jq("#comms").css({color: "#4e555d"})
+            jq("#notes").css({color: "#4e555d"})
+
+        })
+        jq('.comm-click').click(function () {
+            jq("#comms-block").show();
+            jq("#notes-block").hide();
+            jq("#asks-block").hide();
+            jq("#comms").css({color: "red"})
+            jq("#notes").css({color: "#4e555d"})
+            jq("#asks").css({color: "#4e555d"})
+        })
+
+        jq('.note-click').click(function () {
+            jq("#notes-block").show();
+            jq("#comms-block").hide();
+            jq("#asks-block").hide();
+            jq("#notes").css({color: "red"})
+            jq("#comms").css({color: "#4e555d"})
+            jq("#asks").css({color: "#4e555d"})
+        })
+        jq('.push-comm').click(function () {
+            var ask=" <script type=\"text/javascript\" src=\"__PUBLIC__/plugins/tinymce/tinymce.min.js\">"+
+                "           <\/script><div class=\"layui-form\" style='margin: 10px'>\n" +
+                "    <textarea id=\"ask-text\"></textarea>\n" +
+                "<button class='layui-btn submit' style='float: right;position: relative;right: 20px;top: 20px;'>提交</button> " +
+                "</div>\n" +
+                "<script>futext(\"#ask-text\",'merge'); <\/script>";
+
+
+            layer.open({
+                type: 1,
+                area:['900px','600px'],
+                skin: 'layui-layer-demo', //样式类名
+                closeBtn: 0, //不显示关闭按钮
+                anim: 2,
+                title: '我要评论',
+                shadeClose: true, //开启遮罩关闭
+                content: ask,
+                success:function () {
+                },
+                end:function () {
+                    // location.reload();
+                }
+            });
+            jq('.submit').click(function () {
+                var content =tinyMCE.activeEditor.getContent();
+                if (clearHtmlexpImg(content) == '' || clearHtmlexpImg(content).trim() == '') {
+                    layer.msg('请输入内容后再提交', {icon: 2, time: 1000}, function () {
+                    });
+                    return false
+                }
+                ajaxform({'content':content,'vid':'{$vid}','uid':'{$Think.session.userid}'}," {:url('index/course/addvideocomm')} ",jq,function (res) {
+                    content=clearHtml(content);
+                    var str="      <div class=\"wenda-listcon mod-qa-list post-row clearfix\" data-id=\"{$Think.session.userid}\">\n" +
+                        "                            <div class=\"headslider qa-medias l\"><a href=\"{:url('user/index/home',array('id'=>$Think.session.userid))}\"\n" +
+                        "                                                                   class=\"media\" target=\"_blank\" title=\"{$Think.session.username}\"><img\n" +
+                        "                                    src=\"__ROOT__{$Think.session.userhead}\"\n" +
+                        "                                    width=\"40\" height=\"40\"></a></div>\n" +
+                        "                            <div class=\"wendaslider qa-content\">\n" +
+                        "                                <div class=\"tit\"><a href=\"{:url('user/index/home',array('id'=>$Think.session.userid))}\" target=\"_blank\">{$Think.session.username}</a>\n" +
+                        "                                </div>\n" +
+                        "                                <div class=\"cnt\">"+content+"</div>\n" +
+                        "                                <div class=\"replymegfooter qa-footer clearfix\">\n" +
+                        "                                    <div class=\"l-box l\"><a title=\"赞\" href=\"javascript:(0);\"\n" +
+                        "                                                            class=\"js-pl-praise moco-btn moco-btn-gray-l\"\n" +
+                        "                                             type=\"4\"               data-id=\""+res.id+"\"> <i\n" +
+                        "                                            class=\"iconfont\">&#xe611;</i> <em>0</em> </a>\n" +
+                        "                                    </div>\n" +
+                        "                                    <span class=\" timeago\">刚刚</span></div>\n" +
+                        "                            </div>\n" +
+                        "                        </div>";
+                    jq('.course_comment').append(str);
+                    layer.closeAll();
+                });
+            })
+
+        })
+        jq('.page-container').on('click','.js-pl-praise',function () {
+            var id=jq(this).attr('data-id');
+            var type=jq(this).attr('type');
+            var uid='{$Think.session.userid}';
+            var $this=jq(this);
+            ajaxform({'type':type,'id':id,'uid':'{$Think.session.userid}'}," {:url('index/course/zan')} ",jq,function (res) {
+                $this.find('i').css('color','red');
+                var tt=$this.find('em').text();
+                $this.find('em').text(parseInt(tt)+1);
+            });
+
+        })
+        jq('.write-note').click(function () {
+            var ask=" <script type=\"text/javascript\" src=\"__PUBLIC__/plugins/tinymce/tinymce.min.js\">"+
+                "           <\/script><div class=\"layui-form\" style='margin: 10px'>" +
+                "<span style='color: #ffcc6f' >如需要截图，请在视频下方如图按钮<span class='snapshot-icon'></span>，并且粘贴到编辑器里</span>" +
+                "    <textarea id=\"ask-text\"></textarea>\n" +
+                "<button class='layui-btn submit' style='float: right;position: relative;right: 20px;top: 20px;'>提交</button> " +
+                "</div>\n" +
+                "<script>futext(\"#ask-text\",'merge');layui.use(['form', 'layedit', 'laydate'], function(){\n" +
+                "  var form = layui.form;form.render();}) <\/script>";
+
+            layer.open({
+                type: 1,
+                area:['900px','550px'],
+                skin: 'layui-layer-demo', //样式类名
+                closeBtn: 0, //不显示关闭按钮
+                anim: 2,
+                title: '记笔记',
+                shadeClose: true, //开启遮罩关闭
+                content: ask,
+                success:function () {
+                },
+                end:function () {
+                    // location.reload();
+                }
+            });
+            jq('.submit').click(function () {
+                var content =tinyMCE.activeEditor.getContent();
+                console.log(clearHtmlexpImg(content) )
+                if (clearHtmlexpImg(content) == '' || clearHtmlexpImg(content).trim() == '') {
+                    layer.msg('请输入内容后再提交', {icon: 2, time: 1000}, function () {
+                    });
+                    return false;
+                }
+                ajaxform({'content':content,'vid':'{$vid}','uid':'{$Think.session.userid}'}," {:url('index/course/addvideonote')} ",jq,function (res) {
+                    content=clearHtml(content);
+                    var str="      <div class=\"wenda-listcon mod-qa-list post-row clearfix\" data-id=\"{$Think.session.userid}\">\n" +
+                        "                            <div class=\"headslider qa-medias l\"><a href=\"{:url('user/index/home',array('id'=>$Think.session.userid))}\"\n" +
+                        "                                                                   class=\"media\" target=\"_blank\" title=\"{$Think.session.username}\"><img\n" +
+                        "                                    src=\"__ROOT__{$Think.session.userhead}\"\n" +
+                        "                                    width=\"40\" height=\"40\"></a></div>\n" +
+                        "                            <div class=\"wendaslider qa-content\">\n" +
+                        "                                <div class=\"tit\"><a href=\"{:url('user/index/home',array('id'=>$Think.session.userid))}\" target=\"_blank\">{$Think.session.username}</a>\n" +
+                        "                                </div>\n" +
+                        "                                <div class=\"cnt\">"+content+"</div>\n" +
+                        "                                <div class=\"replymegfooter qa-footer clearfix\">\n" +
+                        "                                    <div class=\"l-box l\"><a title=\"赞\" href=\"javascript:(0);\"\n" +
+                        "                                                            class=\"js-pl-praise moco-btn moco-btn-gray-l\"\n" +
+                        "                                                   type=\"5\"         data-id=\""+res.id+"\"> <i\n" +
+                        "                                            class=\"iconfont\">&#xe611;</i> <em>0</em> </a>\n" +
+                        "                                    </div>\n" +
+                        "                                    <span class=\" timeago\">刚刚</span></div><div style='margin-left: 20px'><a target='_blank'href=''>查看全文</a> </div>\n" +
+                        "                            </div>\n" +
+                        "                        </div>";
+                    jq('.course_note').append(str);
+                    layer.closeAll();
+                });
+            })
+
+        })
+        jq('.ask-answer').click(function () {
+            var ask=" <script type=\"text/javascript\" src=\"__PUBLIC__/plugins/tinymce/tinymce.min.js\">"+
+                "           <\/script><div class=\"layui-form\" style='margin: 10px'>\n" +
+                "    <div class=\"layui-form-item\">\n" +
+                "        <input type=\"text \" name=\"title\" required class=\"layui-input\" placeholder=\"请输入问题标题\">\n" +
+                "    </div>\n" +
+                "    <textarea id=\"ask-text\"></textarea>\n" +
+                "<button class='layui-btn submit' style='float: right;position: relative;right: 20px;top: 20px;'>提交</button> " +
+                "</div>\n" +
+                "<script>futext(\"#ask-text\",'merge'); <\/script>";
+
+            layer.open({
+                type: 1,
+                area:['900px','600px'],
+                skin: 'layui-layer-demo', //样式类名
+                closeBtn: 0, //不显示关闭按钮
+                anim: 2,
+                title: '我要提问',
+                shadeClose: true, //开启遮罩关闭
+                content: ask,
+                success:function () {
+                },
+                end:function () {
+                    // location.reload();
+                }
+            });
+            jq('.submit').click(function () {
+                var title=jq('input[name=title]').val();
+                var content =tinyMCE.activeEditor.getContent();
+                if (clearHtmlexpImg(content) == '' || clearHtmlexpImg(content).trim() == ''||title == '' ||title.trim() == '') {
+                    layer.msg('请输入内容后再提交', {icon: 2, time: 1000}, function () {
+                    });
+                    return;
+                }
+                ajaxform({'title':title,'content':content,'vid':'{$vid}','uid':'{$Think.session.userid}'}," {:url('index/course/addvideoask')} ",jq,function (res) {
+                    content = clearHtml(content);
+                    var str="       <div class=\"wenda-listcon mod-qa-list clearfix\">\n" +
+                        "                            <div class='icon-wenda'></div>\n" +
+                        "                            <div class=\"headslider qa-medias l\"><a href=\"{:url('user/index/home',array('id'=>$Think.session.userid))}\"\n" +
+                        "                                                                   class=\"media\" target=\"_blank\"\n" +
+                        "                                                                   title=\"{$Think.session.username}\"><img\n" +
+                        "                                    src=\"__ROOT__{$Think.session.userhead}\"\n" +
+                        "                                    width=\"40\" height=\"40\"></a></div>\n" +
+                        "                            <div class=\"wendaslider qa-content\">\n" +
+                        "                                <h2 class=\"wendaquetitle qa-header\">\n" +
+                        "                                    <div class=\"wendatitlecon qa-header-cnt clearfix\"><a\n" +
+                        "                                            href=\"{:url('index/course/qadetail')}?aid="+res.id+"\" target=\"_blank\"\n" +
+                        "                                            class=\"qa-tit\"> {$Think.session.username}</a></div>\n" +
+                        "                                </h2>\n" +
+                        "                                <div class=\"replycont qa-body clearfix\">\n" +
+                        "                                    <div class=\"fl replydes best\"><span class=\"replysign\"><span\n" +
+                        "                                            class=\"adopt\">暂无回答</span>  </span>\n" +
+                        "                                        <div class=\"replydet\"><a  target=\"_blank\" style=\"color: white\" href=\"{:url('index/course/qadetail')}?aid="+res.id+"\" class=\"layui-btn\">我要发布</a></div>\n" +
+                        "                                    </div>\n" +
+                        "                                </div>\n" +
+                        "                                <div class=\"replymegfooter qa-footer clearfix\">\n" +
+                        "                                    <div class=\"l-box l\"><a href=\"https://www.imooc.com/qadetail/291797\"\n" +
+                        "                                                            target=\"_blank\" class=\"replynumber static-count \"> <span\n" +
+                        "                                            class=\"static-item answer\"> 0 回答   </span>\n" +
+                        "                                        <span class=\"static-item\">           </span>\n" +
+                        "                                    </a></div>\n" +
+                        "                                    <em class=\"r\">刚刚</em></div>\n" +
+                        "                            </div>\n" +
+                        "                        </div>";
+                    jq('.course_quescon').append(str);
+                    layer.closeAll();
+                });
+            })
+
+        })
+
+        //
+
+        //
+
+
+    });
+
+</script>
+{/block}

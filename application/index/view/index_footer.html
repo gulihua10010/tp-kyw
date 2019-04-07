@@ -1,0 +1,40 @@
+<div class="footer">
+    <div class="content-index clearfix">
+        <div class="footnav">
+            <ul>
+                {volist name="footnav" id="vo"}
+                <li><a href="{$vo.link|getnavlink=$vo.sid}" target="{$vo.target}">{$vo.name}</a>
+                    <ul>
+                        {volist name="vo.child" id="vo1"}
+                        <li><a href="{$vo1.link|getnavlink=$vo1.sid}" target="{$vo1.target}">{$vo1.name}</a></li>
+                        {/volist}
+                    </ul>
+                </li>
+                {/volist}
+
+            </ul>
+
+        </div>
+        <span>
+            {if condition="$site_config['site_icp'] neq ''"}
+            ICP备案号:{$site_config['site_icp']}
+            {/if}
+
+        </span>
+        <span>
+            {if condition="$site_config['site_copyright'] neq ''"}
+            版权信息:{$site_config['site_copyright']}
+            {/if}
+
+        </span>
+        <span>
+            {if condition="$site_config['site_tongji'] neq ''"}
+            {$site_config['site_tongji']}
+            {/if}
+
+        </span>
+
+
+    </div>
+</div>    
+ 

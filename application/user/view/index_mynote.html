@@ -1,0 +1,72 @@
+{extend name="index_base" /}
+{block name="seo"}
+<title>{$site_config['site_title']}|{$site_config['seo_title']}</title>
+
+<meta name="keywords" content="{$site_config['seo_keyword']}">
+<meta name="description" content="{$site_config['seo_description']}">
+{/block}
+
+{block name="css"}
+{/block}
+{block name="body"}
+<div class="content-index">
+    <div class="main-mid user-x-top">
+            <a target="_blank" href="{:url('user/index/home',array('id'=>$m.id))}" title="{$m.username}">
+                <img src="__ROOT__{$m.userhead}" title="{$m.username}"></a>
+            <span><a target="_blank" href="{:url('user/index/home',array('id'=>$m.id))}" title="{$m.username}">
+                {$m.username}的课程笔记</a></span><span>  </span>
+                <div class="user-x-btn" style="float: right">
+                    <span type="edit"><a style="color:#999"  class="ask-edit" target="_blank" href="{:url('user/index/home',array('id'=>$m.id))}">TA的个人中心</a></span>
+                </div>
+
+    </div>
+        <div class=" main-mid x-main ">
+            <ul>
+                {volist name="note" id="vo"}
+
+                <li  >
+                    <div class="flist-title"><span>课程视频名称:
+                        <a  class="cb"  target="_blank" href="{:url('index/course/showvideo',array('vid'=>$vo.vid,'cid'=>$vo.cid))}">{$vo.vname}</a> </span></div>
+                    <div>
+
+                    <span style="padding-left: 30px">{$vo['content']|isCoverImg}{$vo['content']|clearcontent|msubstr=0,50}...</span>
+                    </div>
+                    <div class="flist-bottom  ">
+                            <div class="fr">
+                        <span>{$vo.time|friendlyDate}</span>
+                                <span> 课程名称: <a href="{:url('index/course/detail',array('id'=>$vo.cid))}" target="_blank">{$vo.cname}</a></span>
+                     <span> <a href="{:url('index/course/notedetail',array('nid'=>$vo.id))}"  target="_blank" class="jie-title cb">查看详情</a> </span>
+
+                            </div>
+                    </div>
+                </li>
+                {/volist}
+            </ul>
+
+        </div>
+
+
+</div>
+
+
+
+{/block}
+{block name="js"}
+<script type="text/javascript" src="__PUBLIC__/js/date.format.js"></script>
+{/block}
+{block name="script"}
+
+<script type="text/javascript">
+
+</script>
+<script>
+
+  layui.use('form', function() {
+      var form = layui.form
+          , jq = layui.jquery;
+
+
+
+  })
+</script>
+{/block}

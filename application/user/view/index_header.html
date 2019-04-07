@@ -1,0 +1,42 @@
+<div class="header">
+  <div class="main">
+    <a  class="main-title" href="{:url('index/index')}" title="{$site_config['site_title']}">{$site_config['site_title']}</a>
+      <div class="nav-bbs">
+          <ul>
+              {volist name="nav" id="vo" }
+              <li   >
+                  <span><a  href="{$vo.link|getnavlink=$vo.sid}" target="{$vo.target}"><i class="iconfont">{$vo.icon}</i>{$vo.name}</a></span>
+                  <ul>
+                      {volist name="vo.child" id="vo1"}
+                      <li> <span><a href="{$vo1.link|getnavlink=$vo1.sid}" target="{$vo1.target}">{$vo1.name}</a></span></li>
+                      {/volist}
+                  </ul>
+              </li>
+              {/volist}
+          </ul>
+      </div>
+
+    <div class="nav-user">
+        {if condition="$Think.session.userid neq ''"}
+        <!-- 登入后的状态 -->
+        <a class="avatar" href="{:url('user/index/home',array('id'=>$Think.session.userid))}">
+            <img src="__ROOT__{$Think.session.userhead }">
+            <cite  style="color:#fff;">{$Think.session.username}</cite>
+            <i style="font-style:normal">{$Think.session.grades|getgradenamebyid}</i>
+        </a>
+        <div class="nav">
+            <a href="{:url('user/index/set')}"   style="color:#fff;" ><i class="iconfont">&#xe65f;</i>设置</a>
+            <a data-url="{:url('user/index/logout')}"   location-url="javascript:location.reload()"  href="javascript:void(0)" class="logi_logout"  style="color:#fff;">
+                <i class="iconfont " style="line-height: 10px; font-size: 26px;">&#xe60c;</i>退出</a>
+        </div>
+        {else/}
+        <!-- 未登入状态 -->
+        <div class="lg-reg">
+            <a class="unlogin"  onclick="showLogin();" ><i  style=" font-size: 26px;" class="iconfont  ">&#xe678;</i></a>
+            <span  class="unlogin-btn" style="cursor: pointer">
+          <a onclick="showLogin();" style="color:#fff;">登录</a><a onclick="showReg();"  style="color:#fff;">注册</a></span></div>
+        {/if}
+
+    </div>
+  </div>
+</div>

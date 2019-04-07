@@ -1,0 +1,82 @@
+{extend name="base" /}
+{block name="body"}
+<!--tab标签-->
+<link rel="stylesheet" type="text/css" href="__ADMIN__/css/formSelects-v4.css"/>
+<div class="layui-tab-brief">
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+            <form method="post">
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">学科名称</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="name" required lay-verify="required" placeholder="必填内容" value="{$sub.name}"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">学科描述</label>
+                    <div class="layui-input-block">
+                        <textarea id="desc" name="desc" cols="50" rows="10">{$sub.desc}</textarea>
+                    </div>
+                </div>
+
+                <div class="btable-paged">
+                    <div class="layui-main">
+                        <div class="formbtngroup">
+                            <button class="layui-btn layui-btn-small" lay-submit="" lay-filter="formadd">更新</button>
+                            <button onclick="history.go(-1);" class="layui-btn layui-btn-primary layui-btn-small">返回
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{/block}
+
+{block name="js"}
+<script src="__ADMIN__/js/jquery-1.9.1.min.js"></script>
+<script src="__ADMIN__/js/jquery-form.js"></script>
+<script src="__ADMIN__/js/common.js"></script>
+<script src="__ADMIN__/js/formSelects-v4.js"></script>
+<script type="text/javascript" src="__ADMIN__/plugins/tinymce/tinymce.min.js"></script>
+{/block}
+{block name="script"}
+<script>
+    layui.use(['layer', 'form', 'element', 'upload'], function () {
+
+        var form = layui.form
+            , $ = layui.jquery
+            , upload = layui.upload
+            , element = layui.element
+
+        //刷新界面 所有元素
+        form.render();
+        form.on('submit', function (data) {
+
+
+                var formdata = {
+                    'data': JSON.stringify({
+                         'name': $('input[name=name]').val()
+                        , 'desc': $('#desc').val()
+                        , 'id': '{$sub.id}'
+                    })
+                }
+                ajaxform(formdata, " {:url('admin/magorSubject/update')} ", $, function () {
+                    window.location.href="{:url('admin/magor/index')} ";
+                })
+
+            return false;
+        });
+
+    });
+
+
+</script>
+{/block}

@@ -1,0 +1,70 @@
+
+<div class="header">
+    <div class="header-top">
+        <div class="content-index clearfix">
+            <div class="fl">
+                <a href="http://{$web_url}/admin.php" target="_blank" style="color: white;line-height: 30px">后台登录</a>
+            </div>
+            <div class="fr header-top-right">
+                {if condition="$Think.session.userid neq ''"}
+                <a class="avatar fl" href="{:url('user/index/home',array('id'=>$Think.session.userid))}">
+                    <img src="__ROOT__{$Think.session.userhead }">
+                    <cite  style="color:#fff;">{$Think.session.username}</cite>
+                    <i  class="grade" style="font-style:normal">{$Think.session.grades|getgradenamebyid}</i>
+                </a>
+                <div class="nav fl">
+                    <a href="{:url('user/index/set')}"  target="_blank" style="color:#fff;" ><i class="iconfont">&#xe65f;</i>设置</a>
+                    <a   onclick="loginout();" href="javascript:void(0)"    style="color:#fff;">
+                        <i class="iconfont " style="line-height: 10px; font-size: 26px;">&#xe60c;</i>退出</a>
+                </div>
+                {else/}
+                 <a href="javascript:void(0);" onclick="showLogin();"  >登录</a>
+                    <a href="javascript:void(0);" onclick="showReg();"  >注册</a>
+                {/if}
+            </div>
+        </div>
+    </div>
+    <div class="header-bootom content-index clearfix">
+        <div class="fl">
+            {if condition="$site_config.logo neq ''"}
+            <img src="__ROOT__{$site_config.logo}" class="logo fl">
+            {/if}
+        </div>
+        <div class="fr">
+            <div class="search-box fl">
+                <div class="select-list search-select fl">
+                    <span id="commonSearch" data-id="1">课程</span>
+                    <ul class="sub-ul" id="commonSearchType">
+                        <li data-id="1"><a href="javascript:void(0);" >课程</a></li>
+                        <li  data-id="2"><a href="javascript:void(0);"  >学校</a></li>
+                        <li  data-id="3"><a href="javascript:void(0);"  >专业</a></li>
+                    </ul>
+                </div>
+                <div class="fl search-input-box">
+                    <input type="text" name="commonSearchInput" id="commonSearchInput" placeholder="学院信息" class="search-input fl">
+                </div>
+                <input type="button" name="" id="btn" value="搜索" class="search-ic fl" style="color: white">
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+$('#commonSearchType li').click(function () {
+    var id=$(this).data('id');
+    $('#commonSearch').attr('data-id',id)
+    $('#commonSearch').text($(this).text());
+})
+    $('#btn').click(function () {
+var id=$('#commonSearch').attr('data-id')
+console.log(id)
+    var url='#';
+    var keywords=$('input[name=commonSearchInput]').val();
+    switch (id){
+        case '2': url="{:url('index/school/index')}?keywords="+keywords;break;
+        case '3': url="{:url('index/magor/index')}?keywords="+keywords;break;
+        case '1': url="{:url('index/course/index')}?keywords="+keywords;break;
+    }
+    window.open(url)
+    })
+
+</script>

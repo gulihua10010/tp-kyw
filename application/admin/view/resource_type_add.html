@@ -1,0 +1,75 @@
+{extend name="base" /}
+{block name="body"}
+
+<!--tab标签-->
+<div class="layui-tab-brief">
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+            <form class="layui-form form-container" data-url="{:url('admin/ResourceType/save')}"
+                  localtion-url="{:url('resource/index')}">
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">资源类别名称</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="name" required lay-verify="required" placeholder="必填内容"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item" style="width: 300px;">
+                    <label class="layui-form-label">所属父类别</label>
+                    <div class="layui-input-block">
+                            <select name="pid">
+                                <option value="0">顶级类别</option>
+                                {volist name="types" id="vo"}
+                                <option value="{$vo.id}"{if condition="$vo['level'] gt 1"}disabled {/if}>{neq name="vo.level"
+                                    value="1"}|{php}for($i=1;$i<$vo['level'];$i++){echo ' --';}{/php}{/neq}{$vo.name}
+                                </option>
+                                {/volist}
+                            </select>
+                        </div>
+                </div>
+
+
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">描述</label>
+                    <div class="layui-input-block">
+                        <textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+                <div class="btable-paged">
+                    <div class="layui-main">
+                        <div class="formbtngroup">
+                            <button class="layui-btn layui-btn-small" lay-submit="" lay-filter="formadd">添加</button>
+                            <button onclick="history.go(-1);" class="layui-btn layui-btn-primary layui-btn-small">返回
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{/block}
+
+{block name="js"}
+<script type="text/javascript" src="__ADMIN__/js/formadd.js"></script>
+{/block}
+{block name="script"}
+<script>
+    layui.use(['form', 'upload'], function () {
+        var form = layui.form
+            , jq = layui.jquery;
+
+
+
+    });
+    layui.use(['element', 'jquery'], function (data) {
+        var element = layui.element
+            , $ = layui.jquery;//导航的hover效果、二级菜单等功能，需要依赖element模块
+
+
+    })
+</script>
+{/block}

@@ -1,0 +1,45 @@
+<div class="edge">
+    <div class="fly-panel leifeng-rank"> 
+      <h3 class="fly-panel-title">近一月发帖榜 - TOP 12</h3>
+      <dl>
+      
+       {volist name="$tptm" id="vo"}
+        <dd>
+          <a href="{:url('user/index/home',array('id'=>$vo['id']))}">
+            <img src="{$vo.userhead|getheadurl}">
+            <cite>{$vo.username}</cite>
+            <i>{$vo.forumnum}帖子</i>
+          </a>
+        </dd>
+        {/volist}
+      </dl>
+    </div>
+    	<div class="fly-panel fly-link leifeng-rank" style="padding-bottom: 0;"> 
+      <h3 class="fly-panel-title">版块列表</h3>
+      <ul>
+	    {volist name="tpto" id="vo"}
+        <li><a href="{:url('bbs/index/view',array('id'=>$vo.id))}">{$vo.name}({$vo.count})</a></li>
+		{/volist}
+      </ul>
+    </div>
+    <dl class="fly-panel fly-list-one"> 
+      <dt class="fly-panel-title">最近热帖</dt>
+       {volist name="tptf" id="vo"}
+      <dd>
+        <a href="{:url('bbs/index/thread',array('id'=>$vo.id))}">{$vo.title}</a>
+        <span><i class="iconfont" style="color: rgb(255,165,0)"> &#xe6a5;</i> {$vo.view}</span>
+      </dd>
+        {/volist}
+    </dl>
+    
+    <dl class="fly-panel fly-list-one"> 
+      <dt class="fly-panel-title">精选帖子</dt>
+      {volist name="tpte" id="vo"}
+      <dd>
+        <a href="{:url('index/thread',array('id'=>$vo.id))}">{$vo.title}</a>
+        <span><i class="iconfont">&#xe62c;</i> {$vo.view}</span>
+      </dd>
+    {/volist}
+    </dl>
+
+  </div>
